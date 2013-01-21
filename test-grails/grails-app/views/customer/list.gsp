@@ -19,7 +19,12 @@
 			
 				<g:sortableColumn property="companyName" title="${message(code: 'customer.companyName.label', default: 'Company Name')}" />
 			
-				<g:sortableColumn property="ratingPoints" title="${message(code: 'customer.ratingPoints.label', default: 'Rating Points')}" />			
+				<g:sortableColumn property="ratingPoints" title="${message(code: 'customer.ratingPoints.label', default: 'Rating Points')}" />
+			
+				<g:sortableColumn property="dateCreated" title="${message(code: 'customer.dateCreated.label', default: 'Date Created')}" />
+			
+				<g:sortableColumn property="lastUpdated" title="${message(code: 'customer.lastUpdated.label', default: 'Last Updated')}" />
+			
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +34,10 @@
 				<td><g:link action="show" id="${customerInstance.id}">${fieldValue(bean: customerInstance, field: "companyName")}</g:link></td>
 			
 				<td>${fieldValue(bean: customerInstance, field: "ratingPoints")}</td>
+			
+				<td><g:formatDate date="${customerInstance.dateCreated}" /></td>
+			
+				<td><g:formatDate date="${customerInstance.lastUpdated}" /></td>
 			
 			</tr>
 		</g:each>

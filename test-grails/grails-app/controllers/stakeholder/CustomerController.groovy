@@ -134,4 +134,15 @@ class CustomerController {
 
 		[customerInstanceList: customerInstanceList.asList(), customerInstanceTotal: customerInstanceList.size()]
 	}
+
+	def viewPhoto() {
+		
+		def customerInstance = Customer.get(params.id)
+       	if (!customerInstance) {
+			render "nada"
+			return
+		}
+		
+		render(view: "viewPhoto", model: [customerInstance: customerInstance])
+	}
 }
