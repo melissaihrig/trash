@@ -244,6 +244,36 @@ $(document).ready(function(){
 			carta.path = directorioImagenes + carta.naipe + carta.numero + ".png";
 		}
 	};
+	
+	/*
+		seteo las posiciones iniciales de las cartas en la vista
+	*/
+	var init_posiciones = function(tableroLogico, tableroGrafico)
+	{
+		var carta;
+	
+		for(var i = 0; i < tableroLogico.length; i++)
+		{
+			for (var j = 0; j < tableroLogico[i].length; j++)
+			{
+				carta = tableroLogico[i][j][0];
+				carta.x = tableroGrafico[i][j].x;
+				carta.y = tableroGrafico[i][j].y;
+			}
+		}
+	};
+	
+	var dibujar_carta = function(carta)
+	{
+		$("canvas").drawImage({
+			source: carta.path,
+			x: carta.x,
+			y: carta.y,
+			width: dimensionAjustadaCarta.ancho,
+			height: dimensionAjustadaCarta.alto,
+			fromCenter: false
+		});	
+	};
 
 	/*
 		dibujar el rectángulo que representa las posiciones donde puede ir una carta
@@ -277,19 +307,11 @@ $(document).ready(function(){
 			{
 				carta = tableroLogico[i][j][0];
 				
-				if (carta != null)
-				{
-					$("canvas").drawImage({
-						source: carta.path,
-						x: carta.x,
-						y: carta.y,
-						width: dimensionAjustadaCarta.ancho,
-						height: dimensionAjustadaCarta.alto,
-						fromCenter: false
-					});
+				if (carta != null) {
+					dibujar_carta(carta);
+				};
 					
-					$("#cartas").append(carta.naipe+carta.numero + " ");
-				}
+				//	$("#cartas").append(carta.naipe+carta.numero + " ");
 			}
 	//		$("#cartas").append("<p></p>");
 		}
@@ -297,7 +319,7 @@ $(document).ready(function(){
 
 	var dibujar_cartas_acumuladas = function(tableroLogicoAcumulacion)
 	{
-		var carta, posicionUltimaCarta;
+		var posicionUltimaCarta;
 
 		for(var i = 0; i < tableroLogicoAcumulacion.length; i++)
 		{
@@ -305,18 +327,8 @@ $(document).ready(function(){
 			{
 				posicionUltimaCarta = tableroLogicoAcumulacion[i][j].length - 1; // la prox carta a recibir
 
-				if (posicionUltimaCarta != 0) 
-				{
-					carta = tableroLogicoAcumulacion[i][j][posicionUltimaCarta-1].carta; // la últ carta colocada
-					 				
-					$("canvas").drawImage({
-						source: carta.path,
-						x: carta.x,
-						y: carta.y,
-						width: dimensionAjustadaCarta.ancho,
-						height: dimensionAjustadaCarta.alto,
-						fromCenter: false
-					});						
+				if (posicionUltimaCarta != 0)  {
+					dibujar_carta(tableroLogicoAcumulacion[i][j][posicionUltimaCarta-1].carta); // la últ carta colocada						
 				}
 			}			
 		}
@@ -340,24 +352,6 @@ $(document).ready(function(){
 					dibujar_cartas_acumuladas(tableroAcumulacion);
   				}
 		});
-	};
-
-	/*
-		seteo las posiciones iniciales de las cartas en la vista
-	*/
-	var init_posiciones = function(tableroLogico, tableroGrafico)
-	{
-		var carta;
-
-		for(var i = 0; i < tableroLogico.length; i++)
-		{
-			for (var j = 0; j < tableroLogico[i].length; j++)
-			{
-				carta = tableroLogico[i][j][0];
-				carta.x = tableroGrafico[i][j].x;
-				carta.y = tableroGrafico[i][j].y;
-			}
-		}
 	};
 
 	// Reset the game when the player catches a monster
@@ -395,14 +389,7 @@ $(document).ready(function(){
 
 	// Draw everything
 	var render = function () {
-		if (bgReady) {
-			ctx.drawImage(bgImage, 0, 0);
-		}
-		
-		if (heroReady) {
-			ctx.drawImage(heroImage, hero.x, hero.y);
-		}
-
+	
 		if (monsterReady) {
 			ctx.drawImage(monsterImage, monster.x, monster.y);
 		}
@@ -488,17 +475,23 @@ $(document).ready(function(){
 		}
 		
 		var posicion = get_posicion_mouse(e),
-			posicionSeleccionada = buscar_posicion_seleccionada_tablero(posicion);
+			posicionSeleccionada = buscar_posicion_seleccionada_tablero(posicion),
+			carta = dragCarta.carta;
 		
 		if (posicionSeleccionada == null) //si qdó fuera de alguna posición válida vuelve a la posición anterioir
 		{
-			dragCarta.carta.x = dragCarta.posXanterior;
-			dragCarta.carta.y = dragCarta.posYanterior;
+			carta.x = dragCarta.posXanterior;
+			carta.y = dragCarta.posYanterior;
 		}
-		else //ubicarla en la nueva posición.
+		else 
 		{
-			dragCarta.carta.x = dragCarta.posXanterior;
-//			dragCarta.carta.y = dragCarta.posYanterior;
+			//ubicarla en la nueva posición.
+			carta.x = tableroGrafico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].x;
+			carta.y = tableroGrafico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].y + 10;
+			
+			//sacarla de su antiguo lugar
+			tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].unshift(carta);
+			 
 		}
 		
 		dibujar_tablero_actual(tableroLogico, tableroAcumulacion, tableroGrafico, tableroGraficoAcumulacion);
@@ -518,6 +511,7 @@ $(document).ready(function(){
 		carta.y = posicionNueva.y - dragCarta.desplazamientoY;
 
 		dibujar_tablero_actual(tableroLogico, tableroAcumulacion, tableroGrafico, tableroGraficoAcumulacion);
+		dibujar_carta(carta);
 	};
 	
 	var funcion_mouse_dobleClick = function(e)
