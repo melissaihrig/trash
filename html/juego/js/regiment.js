@@ -555,7 +555,10 @@ $(document).ready(function(){
 				dibujar_tablero_actual(tableroLogico, tableroAcumulacion, tableroGrafico, tableroGraficoAcumulacion);
 				return;
 			}
+			
+			dragCarta = null;
 		}
+		
 	};
 
 	var esta_seleccionada = function(posicionTablero, posicion)
