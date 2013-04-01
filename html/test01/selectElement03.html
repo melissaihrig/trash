@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<!--  -->
+<html>
+<head>
+  <style>
+    div,span {
+      width: 100px;
+      height: 40px;
+      float:left;
+      padding: 10px;
+      margin: 10px;
+      background-color: #EEEE00;
+    }
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+  <div class="notMe">div class="notMe"</div>
+  <div class="myClass">div class="myClass"</div>
+  <span class="myClass">span class="myClass"</span>
+
+  <script>
+    /* jQuery( ".class" )
+        class: A class to search for. Un elemento puede tener múltiples clases; sólo una de ellas debe matechear.
+    */
+    $(".myClass").css("border","3px solid blue");
+  </script>
+ 
+  <div class="myclass">div class="notMe"</div>
+  <div class="myclass otherclass">div class="myClass"</div>
+  <span class="myclass otherclass">span class="myClass"</span>
+  
+  <script>
+    /* más de una clase
+    */
+    $(".myclass.otherclass").css("border","13px solid red");
+  </script>
+
+</body>
+</html>

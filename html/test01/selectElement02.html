@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<!-- Find all elements within document.body so elements like head, script, etc. are excluded. -->
+
+<html>
+<head>
+  <style>
+    h3 { margin: 0; }
+    div,span,p {
+      width: 80px;
+      height: 40px;
+      float:left;
+      padding: 10px;
+      margin: 10px;
+      background-color: #EEFFEE;
+    }
+    #test {
+      width: auto;
+      height: auto;
+      background-color: #FF00FF;
+    }
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="test">
+    <div>DIV</div>
+    <span>SPAN</span>
+    <p>P <button>Button</button></p>
+  </div>
+  <script>
+    /*   #nombre => id=nombre
+    */
+    var elementCount = $("#test").find("*").css("border","3px solid red").length;
+    $("body").prepend("<h3>" + elementCount + " elementos</h3>");
+  </script>
+ 
+</body>
+</html>

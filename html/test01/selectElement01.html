@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<!-- Example: Find every element (including head, body, etc) in the document. Note that if your browser has an extension/add-on enabled that inserts a <script> or <link> element into the DOM, that element will be counted as well. -->
+
+<html>
+<head>
+  <style>
+    h3 { 
+      margin: 10;
+   }
+    div,span,p {
+      /* ancho del rectangulo
+          nro px
+          nro %
+      */
+      width: 60px;
+      /* alto del rectangulo
+          nro px
+          nro %
+      */
+      height: 40px;
+      /* flujo
+          left
+          rigth
+      */
+      float:left;
+      /* margen con respecto al interior del borde */
+      padding: 10px;
+      /* margen con respecto a los costados */
+      margin: 5px;
+      /* color de fondo 
+         # nroHexadecimal
+         transparent
+      */
+      background-color: #FFEEEE;
+    }   
+  </style> 
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+ 
+  <div>DIV</div>
+  <span>SPAN</span>
+  <p>P <button>Button</button></p>
+  
+  <script>
+    var elementCount = $("*").css("border","3px solid red").length;
+    /* .prepend(content [,content])
+          content: one o más elementos DOM, arrays de elementos, strings HTML, o objetos jQuery para ser insertados al principio de cada elemento del conjunto que machee.
+
+      En este caso, busca el elemento 'body'
+    */
+    $("body").prepend("<h3>" + elementCount + " elementos </h3>");
+  </script>
+ 
+</body>
+</html>

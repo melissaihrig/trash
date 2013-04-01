@@ -150,5 +150,62 @@
 	    // };
 	});
 	</script>
+
+
+
+	<div class="control-group">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Required documentation</th>
+			          	<th>Tracking number</th>
+			          	<th>Date received</th>
+			          	<th> </th>
+	                	</tr>
+	            	</thead>
+			<tbody>
+				<tr>
+		                  	<td> 
+				               	<label class="checkbox">
+							<input type="checkbox" id="chk1" onclick="clickDocPhase1()"> Tipo de docuemtno1
+						</label>
+					</td>
+		                  	<td>
+		                  		<input type="text" name="bill" id="txt1" disabled="true"/>
+		                  	</td>
+		                  	<td>	
+		                  		<p><a role="button" id="btnA1" class="btn btn-small btn-primary" disabled="true"> ${message(code: 'wish.loadFile.label', default: 'Add file')}</a></p>
+		                  		<p><a role="button" id="btnE1" class="btn btn-small btn-primary" disabled="true"> ${message(code: 'wish.deleteDocument.label', default: 'Delete document')}</a></p>
+		                  	 </td>
+				</tr>
+	             </tbody>
+		</table>
+
+		<div id="ol"> </div>
+	</div>
+	<script>
+    	 
+    		function clickDocPhase1() {
+    			if ($("#chk1").prop("checked") == true)
+            		{ 
+        			$("#txt1").prop("disabled", false);
+        			$("#date1").prop("disabled", false);
+        			$("#btnA1").removeAttr("disabled"); 
+        			$("#btnE1").removeAttr("disabled");                      
+                	} 
+                	else
+                   	{ 
+        			$("#txt1").prop("disabled", true);
+        			$("#date1").prop("disabled", true);
+        			$("#btnA1").attr("disabled", "disabled");
+        			$("#btnE1").attr("disabled", "disabled");
+
+                    	}
+
+			var hi = $("#btnA1").attr("disabled"); 
+			$("#ol").text("acá " + hi);
+        	}
+    	</script>	
+
 </body>
 </html>
