@@ -23,6 +23,7 @@ $(document).ready(function(){
 	var tableroAcumulacion = null;
 
 	var dragCarta = null;
+	var mouseAbajo = false;
 
 	var naipeIngles = ["c", "d", "p", "t"];
 
@@ -174,9 +175,24 @@ $(document).ready(function(){
 
 		// para escuchar eventos
 		$("canvas").mousedown(funcion_mouse_down);
-		$("canvas").mouseup(funcion_mouse_up);
 		$("canvas").mousemove(funcion_mouse_move);
-		$("canvas").dblclick(funcion_mouse_dobleClick);
+	
+		//para que no llame al mouseup cuando se hace dobleclick
+		$("canvas").mouseup(function(e) {
+			var that = this;
+			setTimeout(function() 
+			{
+		        var dblclick = parseInt($(that).data('double'), 10);
+		        if (dblclick > 0) {
+		            $(that).data('double', dblclick-1);
+		        } else {
+		            funcion_mouse_up.call(that, e);
+		        }
+		    }, 300);
+		}).dblclick(function(e) {
+			$(this).data('double', 2);
+			funcion_mouse_dobleClick.call(this, e);
+		});
 
 		var anchoVentana = $canvas[0].width,
 			altoVentana = $canvas[0].height,
@@ -450,11 +466,14 @@ $(document).ready(function(){
 		if (posicionSeleccionada == null) {
 			return;
 		}
-		
+
 		if(tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila][0] == null) {
 			return;
 		}
 		
+		//en cualquier función que maneje el evento ondrop. De esta forma el navegador detiene la acción por defecto que es abrir el link de la imagen.
+		e.preventDefault();
+
 		carta = tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila][0];
 		
 		dragCarta = {
@@ -462,8 +481,12 @@ $(document).ready(function(){
 			desplazamientoX: posicion.x - tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila][0].x, 
 			desplazamientoY: posicion.y - tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila][0].y,
 			posXanterior: carta.x,
-			posYanterior: carta.y
+			posYanterior: carta.y,
+			nroColumna: posicionSeleccionada.nroColumna,
+			nroFila: posicionSeleccionada.nroFila
 		};
+
+		mouseAbajo = true;
 
 		return;
 	};
@@ -489,18 +512,20 @@ $(document).ready(function(){
 			carta.x = tableroGrafico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].x;
 			carta.y = tableroGrafico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].y + 10;
 			
-			//sacarla de su antiguo lugar
-			tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].unshift(carta);
-			 
+			//ponela en la nueva ubicación en el tablero lógico
+//			tableroLogico[posicionSeleccionada.nroColumna][posicionSeleccionada.nroFila].unshift(carta);
+			//sacarla de su antiguo lugar del tablero lógico 
+//			tableroLogico[nroColumna][nroFila].shift();
 		}
 		
 		dibujar_tablero_actual(tableroLogico, tableroAcumulacion, tableroGrafico, tableroGraficoAcumulacion);
 		dragCarta = null;
+		mouseAbajo = false;
 	};
 
 	var funcion_mouse_move = function (e)
 	{
-		if(dragCarta == null) {	
+		if(dragCarta == null || mouseAbajo == false) {	
 			return;
 		}
 
@@ -521,6 +546,9 @@ $(document).ready(function(){
 			elementoCreciente,
 			elementoDecreciente,
 			carta;
+
+		dragCarta = null;
+		e.preventDefault();
 
 		if(posicionSeleccionada == null) {
 			return;
@@ -555,10 +583,7 @@ $(document).ready(function(){
 				dibujar_tablero_actual(tableroLogico, tableroAcumulacion, tableroGrafico, tableroGraficoAcumulacion);
 				return;
 			}
-			
-			dragCarta = null;
 		}
-		
 	};
 
 	var esta_seleccionada = function(posicionTablero, posicion)
