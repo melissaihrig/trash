@@ -1,64 +1,75 @@
 #include	"../header/SharedMemBoard.h"
-#include <unistd.h>
+#include 	<unistd.h>
+
 SharedMemBoard::SharedMemBoard()
 {
 	this->shmIdBoard = 0;
-	this->shmId = 0;
-	this->ptrDatos = NULL;
+	this->shmIdScore = 0;
+	this->shmIdLoserGame = 0;
+	this->shmIdLoserRound = 0;
+	this->board = NULL;
+	this->loserGame = NULL;
+	this->loserRound = NULL;
 }
 
 SharedMemBoard::~SharedMemBoard() {}
 
-void* SharedMemBoard::createSpaceToScore(const string name, const char letter, int& shmid, const size_t dataSize, const bool ronly) {
+void* SharedMemBoard :: createSpaceToScore ( const string name, int& shmid, const size_t dataSize ) {
 
-	key_t key = ftok ( name.c_str(), letter );
+	key_t key = ftok ( name.c_str(), 'A' );
 
 	if ( key == -1 )
 		return NULL;
 
-	shmid = shmget ( key, dataSize, 0644 | IPC_CREAT );
+	shmid = shmget ( key, dataSize, 0666 | IPC_CREAT );
 
 	if ( shmid == -1 )
 		return NULL;
 
-	void* ptrTemporal ;
-//	if ( ronly == true )
-//	{
-//		ptrTemporal = shmat ( shmid, NULL, SHM_RDONLY );
-//		cout<<"solo lectura" << endl;
-//	}
-//	else
-//	{
-		ptrTemporal = shmat ( shmid, NULL, 0 );
-//	}
+	void* ptrTemporal = shmat ( shmid, NULL, 0 );
 
 	if ( ptrTemporal == (void *) -1 )
 		return NULL;
 
-	cout<< "shmId " << shmid << " ptr " << ptrTemporal  << " " << name <<  " " << getpid() << endl;
+	cout<< "--------------> key: " << key << " shmId " << shmid << " ptr " << ptrTemporal  << " " << name <<  " " << getpid() << " data: " << dataSize << endl;
 	return  ptrTemporal;
 }
 
-int SharedMemBoard :: create ( const string name, const int numberOfPlayers, const bool ronly ) {
+int SharedMemBoard :: create ( const int numberOfPlayers ) {
 
-	cout << name << " " << numberOfPlayers << " " << ronly << endl;
-	cout<< " board ";
-	this->ptrDatos = (Board*)createSpaceToScore( name, 'A', this->shmIdBoard, sizeof(Board), ronly);
-
-	if ( ptrDatos  == NULL ) {
-		cerr << "Error en la creación de la memoria compartida en SharedMemBoard: ptrDatos" << endl;
-		return -1;
-	}
 	cout<< " score ";
-	/*crear memoria para el puntaje*/
-	char* score = (char*)createSpaceToScore( name, 'Z', this->shmId, sizeof(char) * numberOfPlayers, ronly );
+	unsigned char* score = ( unsigned char* ) createSpaceToScore ( Constants::MEMORY_SCORE, this->shmIdScore, sizeof( unsigned char ) * numberOfPlayers );
 
 	if ( score == NULL ) {
 		cerr << "Error en la creación de la memoria compartida en SharedMemBoard: score" << endl;
 		return -1;
 	}
 
-	this->ptrDatos->board = score;
+	cout<< " board ";
+	this->board = ( Board* ) createSpaceToScore ( Constants::MEMORY_BOARD, this->shmIdBoard, sizeof( Board ) );
+
+
+	if ( board  == NULL ) {
+		cerr << "Error en la creación de la memoria compartida en SharedMemBoard: ptrDatos" << endl;
+		return -1;
+	}
+
+	this->board->board = score;
+
+	this->loserGame = ( int* ) createSpaceToScore ( Constants::MEMORY_PLAYER_LOSER_OF_GAME, this->shmIdLoserGame, sizeof( int ) );
+
+	if ( loserGame  == NULL ) {
+		cerr << "Error en la creación de la memoria compartida en SharedMemBoard: loserGame" << endl;
+		return -1;
+	}
+
+	this->loserRound = ( int* ) createSpaceToScore ( Constants::MEMORY_PLAYER_LOSER_OF_ROUND, this->shmIdLoserRound, sizeof( int ) );
+
+	if ( loserRound  == NULL ) {
+		cerr << "Error en la creación de la memoria compartida en SharedMemBoard: loserRound" << endl;
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -79,7 +90,7 @@ int SharedMemBoard :: destroy( void*  ptr, int shmId ) {
 		if ( rVal2 != 0 )
 			cerr << "Error en MemoriaCompartidaBoard " <<  strerror(errno) << endl;
 	}
-cout<< "1: " << rVal1 << " 2: " << rVal2 << endl;
+cout<< "1: " << rVal1 << " 2: " << rVal2 <<" " << getpid()<< endl;
 	return ( rVal1 == -1 || rVal2 == -1 )? -1 : 0;
 
 }
@@ -88,21 +99,42 @@ int SharedMemBoard :: destroy () {
 
 	cout<< " score ";
 
-	int rVal1 = this->destroy( (void*) this->ptrDatos->board, this->shmId  );
+	int rVal1 = this->destroy( (void*) this->board->board, this->shmIdScore  );
 	cout<< " board ";
 
-	int	rVal2 = this->destroy( (void*) this->ptrDatos, this->shmIdBoard );
+	int	rVal2 = this->destroy( (void*) this->board, this->shmIdBoard );
 
-	return ( rVal1 == -1 || rVal2 == -1 )? -1 : 0;
+	int	rVal3 = this->destroy( (void*) this->loserGame, this->shmIdLoserGame );
+
+	int	rVal4 = this->destroy( (void*) this->loserRound, this->shmIdLoserRound );
+
+	return ( rVal1 == -1 || rVal2 == -1 || rVal3 == -1 || rVal4 == -1 )? -1 : 0;
 }
 
-void SharedMemBoard :: write ( Board* dato ) {
-	 *this->ptrDatos = *dato;
+void SharedMemBoard :: updateBoard ( Board* dato ) {
+	 *this->board = *dato;
 }
 
-Board* SharedMemBoard :: read () {
-	return this->ptrDatos;
+Board* SharedMemBoard :: getBoard () {
+	return this->board;
 }
+
+int SharedMemBoard :: getTheLoserOfRound () const {
+	return *this->loserRound;
+}
+
+void SharedMemBoard :: setTheLoserOfRound ( const int playerId ) {
+	 *this->loserRound = playerId;
+}
+
+int SharedMemBoard :: getTheLoserOfGame () const {
+	return *this->loserGame;
+}
+
+void SharedMemBoard :: setTheLoserOfGame ( const int playerId ) {
+	 *this->loserGame = playerId;
+}
+
 
 unsigned long int  SharedMemBoard :: amountOfAttachedProcesses( const int shmId ) const {
 	shmid_ds estado;

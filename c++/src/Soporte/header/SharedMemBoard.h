@@ -7,18 +7,23 @@
 #include 	<errno.h>
 #include 	<stdio.h>
 #include 	<string.h>
-#include	"../../Dominio/header/Board.h"
+
+#include 	"Board.h"
 
 using namespace std;
 
 class SharedMemBoard {
 private:
 	int		shmIdBoard;
-	int		shmId;
+	int		shmIdScore;
+	int 	shmIdLoserRound;
+	int 	shmIdLoserGame;
 
-	Board*	ptrDatos;
+	Board*	board;
+	int*	loserRound;
+	int*	loserGame;
 
-	void* createSpaceToScore( const string name, const char letter, int& shmid, const size_t dataSize, const bool ronly );
+	void* createSpaceToScore( const string name, int& shmid, const size_t dataSize );
 	int destroySpaceToPlayers();
 
 	int destroy( void *  ptr, int shmId );
@@ -29,11 +34,21 @@ public:
 
 	SharedMemBoard ();
 	~SharedMemBoard ();
-	int create ( const string name, const int numberOfPlayers = 0, const bool ronly = false);
+
+	int create ( const int numberOfPlayers = 0 );
 	int destroy ();
-	void write ( Board* dato );
-	Board* read ();
+
+	void updateBoard ( Board* dato );
+	Board* getBoard ();
+
+	int getTheLoserOfRound () const;
+	void setTheLoserOfRound ( const int playerId );
+
+	int getTheLoserOfGame () const;
+	void setTheLoserOfGame ( const int playerId );
+
 	unsigned long int amountOfAttachedProcesses() const ;
 };
+
 
 #endif /* SHAREDMEMBOARD_H_ */
