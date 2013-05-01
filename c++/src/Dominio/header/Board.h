@@ -18,6 +18,9 @@ using namespace std;
 class Board {
 
 private:
+
+	friend class SharedMemBoard;
+
 	static const string score;
 	unsigned char* 		board;
 	int 				numberOfPlayers;
@@ -40,8 +43,6 @@ public:
 	int getTheLoser () const;
 
 	int getNumberOfPlayers () const;
-
-	friend class MemoriaCompartidaBoard;
 };
 
 #endif /* BOARD_H_ */
