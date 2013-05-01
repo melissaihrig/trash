@@ -67,10 +67,7 @@ int Semaphore::v() {
 	operacion.sem_flg = SEM_UNDO;
 
 	int resultado = semop(this->id, &operacion, 1);
-	//if (resultado == -1) {
-	//cout << "problemas para aplicar v en semaforo" << endl;
-	//perror("V");
-	//}
+
 	return resultado;
 }
 
@@ -83,9 +80,7 @@ int Semaphore::c() {
 	operacion.sem_flg = SEM_UNDO;
 
 	int resultado = semop(this->id, &operacion, 1);
-	//if (resultado == -1) {
-	//cout << "problemas para aplicar c en semaforo" << endl;
-	//}
+
 	return resultado;
 }
 

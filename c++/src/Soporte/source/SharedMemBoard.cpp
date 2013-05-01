@@ -31,13 +31,13 @@ void* SharedMemBoard :: createSpaceToScore ( const string name, int& shmid, cons
 	if ( ptrTemporal == (void *) -1 )
 		return NULL;
 
-	cout<< "--------------> key: " << key << " shmId " << shmid << " ptr " << ptrTemporal  << " " << name <<  " " << getpid() << " data: " << dataSize << endl;
+//	cout<< "--------------> key: " << key << " shmId " << shmid << " ptr " << ptrTemporal  << " " << name <<  " " << getpid() << " data: " << dataSize << endl;
 	return  ptrTemporal;
 }
 
 int SharedMemBoard :: create ( const int numberOfPlayers ) {
 
-	cout<< " score ";
+//	cout<< " score ";
 	unsigned char* score = ( unsigned char* ) createSpaceToScore ( Constants::MEMORY_SCORE, this->shmIdScore, sizeof( unsigned char ) * numberOfPlayers );
 
 	if ( score == NULL ) {
@@ -45,7 +45,7 @@ int SharedMemBoard :: create ( const int numberOfPlayers ) {
 		return -1;
 	}
 
-	cout<< " board ";
+//	cout<< " board ";
 	this->board = ( Board* ) createSpaceToScore ( Constants::MEMORY_BOARD, this->shmIdBoard, sizeof( Board ) );
 
 
@@ -75,7 +75,7 @@ int SharedMemBoard :: create ( const int numberOfPlayers ) {
 
 int SharedMemBoard :: destroy( void*  ptr, int shmId ) {
 
-	cout<< "shmId " << shmId <<  " ptr " << ptr  <<  " " << getpid() << endl;
+//	cout<< "shmId " << shmId <<  " ptr " << ptr  <<  " " << getpid() << endl;
 
 	int rVal1 = shmdt ( ptr ),
 			rVal2 = 0 ;
@@ -90,17 +90,17 @@ int SharedMemBoard :: destroy( void*  ptr, int shmId ) {
 		if ( rVal2 != 0 )
 			cerr << "Error en MemoriaCompartidaBoard " <<  strerror(errno) << endl;
 	}
-cout<< "1: " << rVal1 << " 2: " << rVal2 <<" " << getpid()<< endl;
+//cout<< "1: " << rVal1 << " 2: " << rVal2 <<" " << getpid()<< endl;
 	return ( rVal1 == -1 || rVal2 == -1 )? -1 : 0;
 
 }
 
 int SharedMemBoard :: destroy () {
 
-	cout<< " score ";
+//	cout<< " score ";
 
 	int rVal1 = this->destroy( (void*) this->board->board, this->shmIdScore  );
-	cout<< " board ";
+//	cout<< " board ";
 
 	int	rVal2 = this->destroy( (void*) this->board, this->shmIdBoard );
 
