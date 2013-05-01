@@ -16,28 +16,30 @@
 using namespace std;
 
 class Board {
-public:
+
+private:
 	static const string score;
-	char* 				board;
+	unsigned char* 		board;
 	int 				numberOfPlayers;
 	int 				loser;
 
 	void initBoard();
 
 public:
-	Board(int numberOfPlayers);
-	virtual ~Board();
+	Board ( int numberOfPlayers );
+	virtual ~Board ();
 
-	Board& operator=( const Board& board );
+	Board& operator= ( const Board& board );
 
 	int updateScore ( int playerID );
 	string getStringScore ( int playerID ) const;
-	int getScore ( int playerID ) const;
-	bool thereIsALoser() const;
-	int getTheLoser() const;
-	int getNumberOfPlayers() const;
-	int getPositionLastLetter( int posicion ) const;
-	void lookAtScore() const;
+	unsigned char getScore ( int playerID ) const;
+	void lookAtScore () const;
+
+	bool thereIsALoser () const;
+	int getTheLoser () const;
+
+	int getNumberOfPlayers () const;
 
 	friend class MemoriaCompartidaBoard;
 };
