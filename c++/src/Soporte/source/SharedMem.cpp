@@ -15,6 +15,8 @@
 #include <iostream>
 
 using namespace soporte;
+using namespace std;
+
 
 template < typename T >
 SharedMem<T>::SharedMem(  const std::string& str )
@@ -51,7 +53,6 @@ int SharedMem<T>::attach (bool ronly ) {
 		ptr = (T*) shmat (segment_id, NULL , SHM_RDONLY);
 	else
 		ptr = (T*) shmat (segment_id, NULL , 0);
-
 	return (ptr == NULL) ? -1 : 0;
 }
 
