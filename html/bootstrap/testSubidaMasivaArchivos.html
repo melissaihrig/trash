@@ -8,7 +8,7 @@
 	<link href="css/inputFile.css" rel="stylesheet">
 	<script src="jQuery/jquery-1.9.1.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-
+	<script src="js/multipleInput.js"></script>
 	<title>Subida masiva de archivos</title>
 
 </head>
@@ -47,24 +47,5 @@
 			<button class="btn btn-primary">Save changes</button>
 		</div>
 	</div>	
-
-	<script type="text/javascript">
-		$(".input-file").change(function() {
-
-			borrarNombresDeArchivo( this );
-
-			for(var i=0; i< $(this).get(0).files.length; i++)
-			{				
-				var nombre = $(this).get(0).files.item(i).name;
-				$(this).parent().find(".input-file-ul").append( "<li>" + nombre + "</li>" );
-			}
-		  
-		});
-
-		function borrarNombresDeArchivo( idBoton ) {
-			$(idBoton).parent().find(".input-file-ul").children().remove();
-		}
-
-	</script>
 </body>
 </html>
