@@ -14,7 +14,10 @@ import vista.carta.CartaInglesaGrafica;
 @SuppressWarnings("serial")
 public class DragCarta extends JPanel {
 	
-	public DragCarta() {
+	public DragCarta()
+	{
+		super();
+		
 		setLayout(null);
 		
 		CartaGrafica carta = new CartaInglesaGrafica( new Carta(8, PaloDeCartaInglesa.CORAZON) );
