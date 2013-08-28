@@ -1,0 +1,41 @@
+package vista.carta;
+
+import java.awt.event.MouseAdapter;
+
+import javax.swing.JLabel;
+
+import modelo.carta.Carta;
+
+
+import vista.UtilVista;
+
+
+public abstract class CartaGrafica extends JLabel {
+	
+	private Carta carta;
+	
+
+	public CartaGrafica( Carta carta )
+	{
+		super();
+		
+		this.carta = carta;
+		
+	}
+	
+
+	protected void setImagenCarta( String pathImagen ) {
+		this.setIcon( UtilVista.crearImagenIcono( this, pathImagen ) );
+	}
+
+
+	public Carta getCarta() {
+		return carta;
+	}
+
+	public void addManejadorDeEventos( MouseAdapter manejador )
+	{
+		this.addMouseListener( manejador );
+		this.addMouseMotionListener( manejador );
+	}
+}

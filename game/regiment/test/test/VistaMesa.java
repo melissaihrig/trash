@@ -11,7 +11,10 @@ import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class VistaMesa extends JFrame {
+	
 	public VistaMesa() {
+	
+		super();
 		
 		JToolBar toolBar = new JToolBar();
 		getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -28,7 +31,7 @@ public class VistaMesa extends JFrame {
 		JPanel lblPpal = new VistaTableroPpal();
 		lblPpal.setBackground(Color.PINK);
 		GridBagConstraints gbc_lblPpal = new GridBagConstraints();
-		gbc_lblPpal.anchor = GridBagConstraints.BASELINE;
+		gbc_lblPpal.anchor = GridBagConstraints.CENTER;
 		gbc_lblPpal.insets = new Insets(0, 0, 0, 5);
 		gbc_lblPpal.gridx = 0;
 		gbc_lblPpal.gridy = 0;
@@ -37,7 +40,7 @@ public class VistaMesa extends JFrame {
 		JPanel lblSec = new VistaTableroSec();
 		lblSec.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_lblSec = new GridBagConstraints();
-		gbc_lblSec.anchor = GridBagConstraints.BASELINE;
+		gbc_lblSec.anchor = GridBagConstraints.CENTER;
 		gbc_lblSec.gridx = 1;
 		gbc_lblSec.gridy = 0;
 		panel.add(lblSec, gbc_lblSec);
