@@ -60,7 +60,7 @@ grails.project.dependency.resolution = {
 
         compile ':kickstart-with-bootstrap:0.9.6'	// para la vista
         compile ':lesscss-resources:1.3.3'			// para la vista
-
+		compile ":shiro:1.2.0"						// para la autenticación
         compile ':cache:1.0.1'
 
         compile
