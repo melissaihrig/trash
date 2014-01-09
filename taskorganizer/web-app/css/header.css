@@ -1,0 +1,48 @@
+/* encabezado de la página principal */
+
+header.encabezado {
+	text-align: center;
+	background-color: #006699;
+	padding: 2%;
+	font-size:18px;
+}
+	header.encabezado h1 {
+		color:#eee; 
+		text-align:center;
+		text-shadow:7px 4px 14px #003366;
+		font-size: 50px;
+		font-style: italic;
+		font-weight: bold;
+	}
+
+/* imagen */
+.list-project{
+
+}
+
+.project {
+	width: 15%;
+	text-align: center;
+	display: inline-block;
+	margin: 20px;
+}
+
+	.project img {
+		vertical-align: middle;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+
+	.project.name {
+		
+	}
+
+.buttonVeryBig{
+	background-color: #006699;
+	border-color: #003366;
+	margin-left: auto;
+	margin-right: auto;
+	width: 350px;
+}
