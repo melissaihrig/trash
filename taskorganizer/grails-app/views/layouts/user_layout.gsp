@@ -18,7 +18,6 @@
 	
 	<link rel="stylesheet" href="${resource(dir: 'css', file: 'project.css')}" type="text/css">
 
-	<%-- Manual switch for the skin can be found in /view/_menu/_config.gsp --%>
 	<r:require modules="jquery"/>
 	<r:require modules="bootstrap"/>
 	<r:require modules="bootstrap_utils"/>

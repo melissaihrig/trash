@@ -28,7 +28,7 @@
             <button class="btn" type="reset"><g:message code="default.button.reset.label" default="Reset" /></button>
 		</div>
 	</g:form>
-	
+		
 </section>
 		
 </body>

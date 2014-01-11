@@ -3,7 +3,7 @@ package taskorganizer
 class Cycle {
 
     String  name
-
+    List    status
     static  hasMany     = [status: Status]
 
     static  constraints = {

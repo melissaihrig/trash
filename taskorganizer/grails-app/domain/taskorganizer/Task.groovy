@@ -14,9 +14,9 @@ class Task {
 //	static	mappedBy	= []	// specifies which property should be used in a mapping 
 	  
 	static	constraints = {
-		description blank:false, unique:true
+		description blank:false
 		status nullable:false
-		weight min:0L
+		weight min:1L
     }
 	
 

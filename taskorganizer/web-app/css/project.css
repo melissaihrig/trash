@@ -30,6 +30,14 @@ form {
 
 .row {
 	margin-bottom: 15px;
-	margin-right: 0px !important;
-	margin-left: 0px !important;	
+}
+
+.image-project {
+	width: 150px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.help-block {
+	color: #b94a48;
 }

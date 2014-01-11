@@ -18,12 +18,50 @@ class Project {
     static  constraints = {
         cycle nullable:false
         name blank:false, unique:true
-        image size: 1..9999999
+        //image size: 1..9999999
+        image maxSize: 1024 * 1024  // Limit upload file size to 1MB
+
     }
     
 
     @Override   // Override toString for a nicer / more descriptive UI 
     public String toString() {
-      return "${name}";
+      return "${name}"
+    }
+
+    public boolean hasImage() {
+        return  image.length > 0
+    }
+
+    public int totalPoint() {
+        int total = 0
+
+        task.each { 
+            total += it.weight
+        }
+
+        return total
+    }
+
+    public int currentPoint() {
+        int total = 0
+
+        task.each {
+            if (it.status == cycle.status.last())
+                total += it.weight
+        }
+
+        return total
+    }
+
+    public int percentageProgress() {
+
+        if (currentPoint() == 0 ) {
+            return 0
+        }
+        else {
+            return totalPoint()/currentPoint()*100
+        }
+
     }
 }

@@ -24,6 +24,7 @@ class TaskController {
     }
 
     def save() {
+        System.out("Llegó al controlador")
         def taskInstance = new Task(params)
         if (!taskInstance.save(flush: true)) {
             render(view: "create", model: [taskInstance: taskInstance])

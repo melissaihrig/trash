@@ -25,12 +25,17 @@ class ProjectController {
 
     def save() {
         def projectInstance = new Project(params)
+
+        projectInstance.task.each {
+            it.status = projectInstance.cycle.status.first()
+        }
+
         if (!projectInstance.save(flush: true)) {
             render(view: "create", model: [projectInstance: projectInstance])
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'project.label', default: 'Project'), projectInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'project.label', default: 'Project'), projectInstance.name])
         redirect(action: "show", id: projectInstance.id)
     }
 
@@ -42,7 +47,17 @@ class ProjectController {
             return
         }
 
-        [projectInstance: projectInstance]
+//        println ".......Estado: "
+//        projectInstance.cycle.status.each {
+//            println it
+//        }
+//
+//    println "........úlrimo"
+//    println projectInstance.cycle.status.asList().last()
+//    println ".........primer"
+//    println projectInstance.cycle.status.asList().first()
+
+        [projectInstance: projectInstance, projectProgress: projectInstance.percentageProgress()]
     }
 
     def edit() {
@@ -106,8 +121,18 @@ class ProjectController {
     }
 
     def ajaxProject() {
-        
         //TODO limitar la cantidad que se muestran
         render(view: "listPicture", model: [projectsIntances: Project.getAll()])
+    }
+
+    def viewImage = {
+        
+        def project = Project.get(params.id)
+        
+        response.setHeader("Content-disposition", "attachment; filename=${params.id}")
+        response.outputStream << project.image  //'myphoto.jpg' will do too
+        response.outputStream.flush()
+
+        return;
     }
 }
