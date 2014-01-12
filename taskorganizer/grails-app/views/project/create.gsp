@@ -34,28 +34,30 @@
 		
 	</g:form>
 
-<div class="task-form hidden">
+<div class=" task-form hidden panel panel-default">              
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'description', 'error')} required">
+                     <input type="text" name="task[numberTask].description" required="" value="" class="form-control" placeholder="${message(code: 'task.description.label', default: 'Description')}*" id="task-description-numberTask">
 
-    <div class="panel panel-default">              
-        <div class="panel-body">
-
-            <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'description', 'error')} required">
-                 <input type="text" name="task[numberTask].description" required="" value="" class="form-control" placeholder="${message(code: 'task.description.label', default: 'Description')}*" id="task-description-numberTask">
-
-                <span class="help-block">${hasErrors(bean: taskInstance, field: 'description', 'error')}</span>
-            </div>
-
-            <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'detail', 'error')} ">
-                <textarea name="task[numberTask].detail" value="" class="form-control" placeholder="${message(code: 'task.detail.label', default: 'Detail')}" rows="3" id="task-detail-numberTask" ></textarea>
-                <span class="help-block">${hasErrors(bean: taskInstance, field: 'detail', 'error')}</span>
-            </div>
-
-            <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'weight', 'error')} required">
-                <label for="weight" class="col-sm-2"><g:message code="task.weight.label" default="Weight" /><span class="required-indicator">*</span></label>
-                <div class="col-sm-10">
-                    <input type="number" name="task[numberTask].weight" min="0" required="" value="" class="form-control" id="task-weight-numberTask">
-                    <span class="help-block">${hasErrors(bean: taskInstance, field: 'weight', 'error')}</span>
+                    <span class="help-block">${hasErrors(bean: taskInstance, field: 'description', 'error')}</span>
                 </div>
+
+                <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'detail', 'error')} ">
+                    <textarea name="task[numberTask].detail" value="" class="form-control" placeholder="${message(code: 'task.detail.label', default: 'Detail')}" rows="3" id="task-detail-numberTask" ></textarea>
+                    <span class="help-block">${hasErrors(bean: taskInstance, field: 'detail', 'error')}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group fieldcontain ${hasErrors(bean: taskInstance, field: 'weight', 'error')} required">
+                    <label for="weight" class="col-sm-3"><g:message code="task.weight.label" default="Weight" /><span class="required-indicator">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="number" name="task[numberTask].weight" min="0" required="" value="1" class="form-control" id="task-weight-numberTask">
+                        <span class="help-block">${hasErrors(bean: taskInstance, field: 'weight', 'error')}</span>
+                    </div>
+                </div>
+                <a role="button" class="col-md-4 col-md-offset-4 btn btn-danger delete-task" id="delete-task-numberTask"><g:message code="default.button.delete.label" default="Delete"/></a>
             </div>
         </div>
     </div>
@@ -75,7 +77,7 @@
             $("#selector-result").text(path.split('\\').pop());
         });
 
-        $("#add-task").on('click', function() {
+        $('#add-task').on('click', function() {
             var body = $(".task-form").clone().removeClass("hidden task-form");
             changeNamesTask(body);
             changeIdsTask(body);
@@ -83,17 +85,23 @@
             currentTask++;
         });
 
+        $('.form').on('click', '.delete-task' ,function() {
+            $(this).closest(".panel-default").remove();
+            currentTask--;
+        });
+
         function changeNamesTask(body) {
             body.find("#task-description-numberTask").attr('name', 'task['+ currentTask +'].description');
             body.find("#task-detail-numberTask").attr('name', 'task['+ currentTask +'].detail');
             body.find("#task-weight-numberTask").attr('name', 'task['+ currentTask +'].weight');
-        }
+        };
 
         function changeIdsTask(body) {
             body.find("#task-description-numberTask").attr('id', 'task-description-'+ currentTask);
             body.find("#task-detail-numberTask").attr('id', 'task-detail-'+ currentTask);
-            body.find("#task-weight-numberTask").attr('id', 'task-weight-'+ currentTask);           
-        }
+            body.find("#task-weight-numberTask").attr('id', 'task-weight-'+ currentTask); 
+            body.find("#delete-task-numberTask").attr('id', 'delete-task-'+ currentTask);
+        };
 
     });
 </script>

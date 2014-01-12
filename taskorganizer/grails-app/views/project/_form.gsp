@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="from-group fieldcontain ${hasErrors(bean: projectInstance, field: 'description', 'error')} ">
-                    <textarea name="description" value="${projectInstance?.description}" placeholder="${message(code: 'project.description.label', default: 'Description')}" class="form-control" rows="10"></textarea>
+                    <textarea name="description" value="${projectInstance?.description}" placeholder="${message(code: 'project.description.label', default: 'Description')}" class="form-control" rows="8"></textarea>
                     <span class="help-block">${hasErrors(bean: projectInstance, field: 'description', 'error')}</span>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         <span class="help-block">${hasErrors(bean: projectInstance, field: 'cycle', 'error')}</span>
                     </div>
                     <div class="col-sm-2">
-                        ?
+                        <span class="glyphicon glyphicon-question-sign"></span>
                     </div>
             </div>
 
@@ -44,22 +44,12 @@
 
 
             <div class="form-group fieldcontain ${hasErrors(bean: projectInstance, field: 'task', 'error')} ">
-                <label for="task" class="label-project col-sm-2 "><g:message code="project.task.label" default="Task" /></label>
+                <label for="task" class="label-project col-sm-2 "><g:message code="project.task.plural.label" default="Tasks" /></label>
             </div>
 
             <div class="panel panel-default">              
                 <div class="tasks panel-body">
-                    <a role="button" class="btn btn-default" id="add-task"> ${message(code: 'default.add.label', args: [message(code: 'task.label', default: 'Task')])} </a>
-                    
-                    <ul class="one-to-many">
-                        <g:each in="${projectInstance?.task?}" var="t">
-                            <li><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                        <li class="add">
-                        <g:link controller="task" action="create" params="['project.id': projectInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'task.label', default: 'Task')])}</g:link>
-                        </li>
-                    </ul>
-
+                    <a role="button" class="btn btn-primary center-block" id="add-task"> ${message(code: 'default.add.label', args: [message(code: 'task.label', default: 'Task')])} </a>
                     <span class="help-block">${hasErrors(bean: projectInstance, field: 'task', 'error')}</span>
                 </div>
             </div>
