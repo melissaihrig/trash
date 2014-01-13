@@ -24,9 +24,12 @@ class ProjectController {
     }
 
     def save() {
+
+        println params
         def projectInstance = new Project(params)
 
-        projectInstance.task.each {
+println "cant: " +  projectInstance.tasks
+        projectInstance.tasks.each {
             it.status = projectInstance.cycle.status.first()
         }
 
@@ -46,16 +49,6 @@ class ProjectController {
             redirect(action: "list")
             return
         }
-
-//        println ".......Estado: "
-//        projectInstance.cycle.status.each {
-//            println it
-//        }
-//
-//    println "........úlrimo"
-//    println projectInstance.cycle.status.asList().last()
-//    println ".........primer"
-//    println projectInstance.cycle.status.asList().first()
 
         [projectInstance: projectInstance, projectProgress: projectInstance.percentageProgress()]
     }

@@ -48,12 +48,12 @@
         </div>              
     </div>
 
-    <g:if test="${projectProgress == 0}">
+    <g:if test="${projectInstance?.tasks?.size() == 0}">
         <div class="alert alert-warning"> <g:message code="project.nottask.label" default="No task was assigned to the project" /> </div>
     </g:if>
 
     <div class="tasks">
-        <g:each in="${projectInstance.task}" var="t">
+        <g:each in="${projectInstance?.tasks}" var="t">
             <div class="alert alert-success"><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></div>
         </g:each>
     </div>

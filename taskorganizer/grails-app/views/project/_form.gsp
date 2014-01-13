@@ -43,8 +43,8 @@
         </div>
 
 
-            <div class="form-group fieldcontain ${hasErrors(bean: projectInstance, field: 'task', 'error')} ">
-                <label for="task" class="label-project col-sm-2 "><g:message code="project.task.plural.label" default="Tasks" /></label>
+            <div class="form-group fieldcontain ${hasErrors(bean: projectInstance, field: 'tasks', 'error')} ">
+                <label for="tasks" class="label-project col-sm-2 "><g:message code="project.tasks.label" default="Tasks" /></label>
             </div>
 
             <div class="panel panel-default">              
@@ -53,3 +53,10 @@
                     <span class="help-block">${hasErrors(bean: projectInstance, field: 'task', 'error')}</span>
                 </div>
             </div>
+
+
+<script type="text/javascript">
+    var currentTask = ${projectInstance?.tasks?.size()} + 0; 
+</script>
+
+<script type="text/javascript" src="${resource(dir:'js', file:'project-application.js')}"> </script>                
