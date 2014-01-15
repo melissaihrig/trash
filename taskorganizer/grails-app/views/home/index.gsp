@@ -8,24 +8,24 @@
 
     <script type="text/javascript">
 
-    $("document").ready(function() {
+        $("document").ready(function() {
 
-        $.ajax({
-            type: 'GET',
-            url: "${createLink(action:'ajaxProject', controller:'project')}",
-            beforeSend: function( xhr ) {
-                $('#currentProject').append('<img class="spinner_style" src="${createLinkTo(dir:'images',file:'spinner_lines.gif')}" />');
+            $.ajax({
+                type: 'GET',
+                url: "${createLink(action:'ajaxProject', controller:'project')}",
+                beforeSend: function( xhr ) {
+                    $('#currentProject').append('<img class="spinner_style" src="${createLinkTo(dir:'images',file:'spinner_lines.gif')}" />');
 
-            },
-            success: function(data, textStatus) {
-                $('#currentProject').html(data);
-            },
-            error: function(request, status, error) {
-                console.log("error al obtener los proyectos");
-            },
+                },
+                success: function(data, textStatus) {
+                    $('#currentProject').html(data);
+                },
+                error: function(request, status, error) {
+                    console.log("error al obtener los proyectos");
+                },
+            });
         });
-    });
-</script>
+    </script>
 </head>
 
 <body>

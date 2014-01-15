@@ -27,8 +27,7 @@ class ProjectController {
 
         println params
         def projectInstance = new Project(params)
-
-println "cant: " +  projectInstance.tasks
+        
         projectInstance.tasks.each {
             it.status = projectInstance.cycle.status.first()
         }
@@ -127,5 +126,37 @@ println "cant: " +  projectInstance.tasks
         response.outputStream.flush()
 
         return;
+    }
+
+    
+
+    def changeStatus() {
+
+        def task = Task.get(params.id)
+        def nextStatus
+
+        println task.project.id == params.projectId.toInteger()
+        if (task.project.id == params.projectId.toInteger()) {
+
+            def project = Project.get(params.projectId)
+
+            println "previousStatus " + task.status
+
+            nextStatus = project.cycle.nextStatus(task.status)
+
+            if (nextStatus == null) {
+                render "error stado"
+                return
+            }
+            else {
+                task.status = nextStatus
+                render nextStatus
+                return
+            }
+
+        }
+
+            println "siguiente estado " + nextStatus
+        render "erorr con pro"
     }
 }

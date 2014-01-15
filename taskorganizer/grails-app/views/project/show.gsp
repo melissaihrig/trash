@@ -31,7 +31,7 @@
 
             <p><strong> <g:message code="project.cycle.label" default="Cycle" />: </strong> ${projectInstance?.cycle}</p>
 
-            <p><strong><g:message code="project.dateCreated.label" default="Date Created" />: </strong><g:formatDate date="${projectInstance?.dateCreated}" /></p>
+            <p><strong><g:message code="project.dateCreated.label" default="Date Created" />: </strong><g:formatDate format="dd-MM-yyyy" date="${projectInstance?.dateCreated}" /></p>
         </div>
     </div>
 
@@ -54,9 +54,56 @@
 
     <div class="tasks">
         <g:each in="${projectInstance?.tasks}" var="t">
-            <div class="alert alert-success"><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success"><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></div>
+                </div>
+                <div class="col-md-4">
+
+                    <g:link action="changeStatus" id="${t?.id}" params="[projectId: projectInstance?.id]"> DE PRUEBA </g:link>
+                    <a role="button" class="btn btn-primary change-task"> ${t?.status} 
+                        <span class="hidden"> <g:createLink controller="project" action="changeStatus" id="${t?.id}" params="[projectId: projectInstance?.id]"/> </span>
+                    </a>
+                    <a role="button" class="btn btn-danger delete-task"> <g:message code="default.button.delete.label" default="Delete"/>
+                        <span class="hidden"> <g:createLink controller="project" action="deleteTask" id="${t?.id}"/> </span></a>
+                </div>
+            </div>
+
         </g:each>
     </div>
+
+    <script>
+        $("document").ready(function() {
+            $(".change-task").on('click', function() {
+
+                var urlTask = $(this).children().text();
+                var button = $(this);
+                console.log("url: " + urlTask);
+
+                $.ajax({
+                    type: 'POST',
+                    url: urlTask,
+                    beforeSend: function( xhr ) {
+                        // $('#currentProject').append('<img class="spinner_style" src="${createLinkTo(dir:'images',file:'spinner_lines.gif')}" />');
+                        console.log("empieza el envio");
+                    },
+                    success: function(data, textStatus) {
+                       button.text(data);
+                        console.log(data);
+                    },
+                    error: function(request, status, error) {
+                        console.log("error al actualizar el estado de la tarea");
+                    },
+                });
+                console.log("cambiar");
+            });
+
+            $(".delete-task").on('click', function() {
+
+                console.log("delete");
+            });
+        });
+    </script>
 
 </section>
 
