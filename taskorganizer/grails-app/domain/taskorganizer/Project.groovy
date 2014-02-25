@@ -43,7 +43,7 @@ class Project {
         int total = 0
 
         tasks.each {
-            if (it.status == cycle.status.last())
+            if (it.status.id == cycle.status.last().id)
                 total += it.weight
         }
 
@@ -56,7 +56,7 @@ class Project {
             return 0
         }
         else {
-            return totalPoint()/currentPoint()*100
+            return currentPoint()/totalPoint()*100
         }
 
     }

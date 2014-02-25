@@ -59,9 +59,8 @@
                     <div class="alert alert-success"><g:link controller="task" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></div>
                 </div>
                 <div class="col-md-4">
-
-                    <g:link action="changeStatus" id="${t?.id}" params="[projectId: projectInstance?.id]"> DE PRUEBA </g:link>
-                    <a role="button" class="btn btn-primary change-task"> ${t?.status} 
+                    <a role="button" class="btn btn-primary change-task"> 
+                        <span class="message-task"> ${t?.status} </span>
                         <span class="hidden"> <g:createLink controller="project" action="changeStatus" id="${t?.id}" params="[projectId: projectInstance?.id]"/> </span>
                     </a>
                     <a role="button" class="btn btn-danger delete-task"> <g:message code="default.button.delete.label" default="Delete"/>
@@ -72,11 +71,20 @@
         </g:each>
     </div>
 
+    <span class="hidden" id="url-change-task"> 
+        <g:createLink controller="project" action="changeStatus" params="[projectId: projectInstance?.id]"/>
+    </span>
+
+    <span class="hidden" id="url-delete-task">
+        <g:createLink controller="project" action="deleteTask" params="[projectId: projectInstance?.id]"/>
+    </span>
+
     <script>
         $("document").ready(function() {
+
             $(".change-task").on('click', function() {
 
-                var urlTask = $(this).children().text();
+                var urlTask = $(this).children(".hidden").text();
                 var button = $(this);
                 console.log("url: " + urlTask);
 
@@ -84,24 +92,39 @@
                     type: 'POST',
                     url: urlTask,
                     beforeSend: function( xhr ) {
-                        // $('#currentProject').append('<img class="spinner_style" src="${createLinkTo(dir:'images',file:'spinner_lines.gif')}" />');
-                        console.log("empieza el envio");
                     },
                     success: function(data, textStatus) {
-                       button.text(data);
-                        console.log(data);
+                        button.children(".message-task").text(data);
+                        updateProgress(urlTask);
                     },
                     error: function(request, status, error) {
                         console.log("error al actualizar el estado de la tarea");
+                        alert("Error al actualizar el estado de la tarea");
                     },
                 });
-                console.log("cambiar");
             });
 
             $(".delete-task").on('click', function() {
 
                 console.log("delete");
             });
+
+            var updateProgress = function(urlTask) {
+                
+                $.ajax({
+                    type: 'POST',
+                    url: urlTask.replace("changeStatus", "updateProgress"),
+                    beforeSend: function( xhr ) {
+                    },
+                    success: function(data, textStatus) {
+                        $(".progress-bar").css("width", data+"%");
+                    },
+                    error: function(request, status, error) {
+                        console.log("error al actualizar el progreso del proyecto");
+                        alert("Error al actualizar el progreso del proyecto");
+                    },
+                });                
+            };
         });
     </script>
 
