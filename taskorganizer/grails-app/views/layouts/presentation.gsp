@@ -27,12 +27,8 @@
 </head>
 
 <body>
-	<g:render template="/_menu/navbar"/>														
-
-	<!-- Enable to overwrite Header by individual page -->
-	<g:render template="/layouts/header"/>														
-
-
+	<g:render template="/_menu/navbar"/>
+					
 	<g:render template="/layouts/content_presentation"/>														
 
 	<!-- Enable to insert additional components (e.g., modals, javascript, etc.) by any individual page -->

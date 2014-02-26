@@ -29,16 +29,38 @@
 </head>
 
 <body>
-    <section id="currentProject">
-        <!-- acá van los proyectos en curso-->
-    </section>
 
-    <section id="menuOption">
-        <g:set var="entityName" value="${message(code: 'project.label', default: 'Project')}" />
-        <g:link class="btn btn-primary btn-lg buttonVeryBig" role="button" controller="project" action="list"> <g:message code="project.list.all" /> </g:link>
-        <g:link class="btn btn-primary btn-lg buttonVeryBig" role="button" controller="project" action="progress"> <g:message code="project.show.progress" /> </g:link>
+    <div class="row">
 
-    </section>
+        <div class="col-md-2">
+            <img src="${resource(dir: 'images', file: 'logo.png')}" alt="TaskOrganizer" style="width:100%">
 
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#">Listas</a></li>
+                <li class="active"><a href="#">Proyectos</a></li>
+                <li> <g:link controller="project" action="list"> <g:message code="project.list.all" /> </g:link> </li>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+
+            <ul class="nav nav-pills center">
+                <li class="active"><a href="#">Vista ícono</a></li>
+                <li><g:link controller="project" action="progress"> <g:message code="project.show.progress" /> </g:link></li>
+                <li><a href="#">Vista detalle</a></li>
+            </ul>
+
+            <section id="currentProject">
+                <!-- acá van los proyectos en curso-->
+            </section>
+
+            <section id="menuOption">
+                <g:set var="entityName" value="${message(code: 'project.label', default: 'Project')}" />
+
+                
+
+            </section>
+        </div>
+    </div>
 </body>
 </html>

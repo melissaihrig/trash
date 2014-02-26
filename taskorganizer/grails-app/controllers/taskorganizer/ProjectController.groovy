@@ -164,25 +164,6 @@ class ProjectController {
             mejora: fijarse si la está terminado y en ese caso, recalcular, sino
             es el valor de antes.*/
         def project = Project.get(params.projectId)
-
-        def task = Task.get(params.id)
-        println task.status
-        println project.currentPoint()
-        println project.totalPoint()
-        
-        println "--------------------------"
-
-        println "ultimo estado: " + project.cycle.status.last() + " " + project.cycle.status.last().id
-
-        int total = 0 
-        project.tasks.each {
-            println "estado actual: " + it.status + "  " + it.status.id
-            if (it.status.id == project.cycle.status.last().id)
-               {
-                println "zon iguales!!!"
-                total += it.weight
-               } 
-        }
         render project.percentageProgress()
     }
 }
