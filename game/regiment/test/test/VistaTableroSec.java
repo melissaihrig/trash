@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 
-import modelo.carta.Carta;
-import modelo.carta.PaloDeCartaInglesa;
+import modelo.Carta;
+import modelo.PaloDeCartaInglesa;
 import vista.carta.CartaInglesaGrafica;
 
 import java.awt.GridBagConstraints;

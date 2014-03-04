@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 
 import regiment.evento.ManejadorDeEventosDeCarta;
 
-import modelo.carta.Carta;
-import modelo.carta.PaloDeCartaInglesa;
+import modelo.Carta;
+import modelo.PaloDeCartaInglesa;
 
 import vista.carta.CartaGrafica;
 import vista.carta.CartaInglesaGrafica;

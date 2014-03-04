@@ -1,7 +1,7 @@
 package vista.carta;
 
 import vista.UtilVista;
-import modelo.carta.Carta;
+import modelo.Carta;
 
 public class CartaInglesaGrafica extends CartaGrafica {
 	

@@ -3,11 +3,11 @@ package modelo.carta;
 import static org.junit.Assert.*;
 
 
-import modelo.carta.BarajaInglesa;
-import modelo.carta.Carta;
-import modelo.carta.Mazo;
-import modelo.carta.PaloDeCartaInglesa;
-import modelo.carta.Tablero;
+import modelo.BarajaInglesa;
+import modelo.Carta;
+import modelo.Mazo;
+import modelo.PaloDeCartaInglesa;
+import modelo.Tablero;
 
 import org.junit.Test;
 

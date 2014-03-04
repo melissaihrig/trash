@@ -9,7 +9,7 @@ public class UtilVista {
 	static public String NAME_NOCARTA = "vacio.png";
 
 
-	static public ImageIcon crearImagenIcono(Object objeto, String path) 
+	static public ImageIcon crearImagenIcono(String path) 
 	{
 		URL imgURL = UtilVista.class.getClass().getResource( path );
 		

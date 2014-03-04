@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JLabel;
 
-import modelo.carta.Carta;
+import modelo.Carta;
 
 
 import vista.UtilVista;
@@ -25,7 +25,7 @@ public abstract class CartaGrafica extends JLabel {
 	
 
 	protected void setImagenCarta( String pathImagen ) {
-		this.setIcon( UtilVista.crearImagenIcono( this, pathImagen ) );
+		this.setIcon( UtilVista.crearImagenIcono( pathImagen ) );
 	}
 
 

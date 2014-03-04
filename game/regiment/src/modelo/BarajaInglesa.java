@@ -1,4 +1,4 @@
-package modelo.carta;
+package modelo;
 
 import java.util.List;
 

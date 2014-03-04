@@ -2,8 +2,8 @@ package regiment.modelo;
 
 import java.util.ArrayList;
 
-import modelo.carta.Carta;
-import modelo.carta.Tablero;
+import modelo.Carta;
+import modelo.Tablero;
 
 
 

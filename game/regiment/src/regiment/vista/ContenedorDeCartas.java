@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import modelo.carta.Carta;
-import modelo.carta.PaloDeCartaInglesa;
+import modelo.Carta;
+import modelo.PaloDeCartaInglesa;
 
 
 import vista.UtilVista;
@@ -24,10 +24,8 @@ public class ContenedorDeCartas extends JPanel {
 		super();
 		
 		JLabel fondo = new JLabel();
-		String la = UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA;
 		
-		System.out.println("Arch: " + la);
-		fondo.setIcon( UtilVista.crearImagenIcono( this, la ) );
+		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA ) );
 		fondo.setSize(fondo.getMaximumSize());
 		
 //		this.setSize(fondo.getSize());

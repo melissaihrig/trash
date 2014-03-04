@@ -1,7 +1,7 @@
 package regiment.controlador;
 
-import modelo.carta.BarajaInglesa;
-import modelo.carta.Mazo;
+import modelo.BarajaInglesa;
+import modelo.Mazo;
 import regiment.modelo.DistribuidorRegiment;
 import regiment.modelo.TableroRegiment;
 import regiment.vista.Mesa;

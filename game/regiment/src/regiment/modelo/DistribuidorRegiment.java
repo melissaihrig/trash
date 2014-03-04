@@ -1,8 +1,8 @@
 package regiment.modelo;
 
-import modelo.carta.DistribuidorDeCartas;
-import modelo.carta.Mazo;
-import modelo.carta.Tablero;
+import modelo.DistribuidorDeCartas;
+import modelo.Mazo;
+import modelo.Tablero;
 
 public class DistribuidorRegiment implements DistribuidorDeCartas {
 

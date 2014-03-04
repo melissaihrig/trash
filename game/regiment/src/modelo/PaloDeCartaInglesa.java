@@ -1,4 +1,4 @@
-package modelo.carta;
+package modelo;
 
 public enum PaloDeCartaInglesa implements PaloDeCarta{
 
