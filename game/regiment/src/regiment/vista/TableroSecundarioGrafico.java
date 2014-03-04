@@ -6,7 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-import regiment.modelo.TableroRegiment;
+import regiment.modelo.TableroRegiment.SubtableroSecundario;
 
 @SuppressWarnings("serial")
 public class TableroSecundarioGrafico extends JPanel {
@@ -17,7 +17,7 @@ public class TableroSecundarioGrafico extends JPanel {
 	{
 		super();
 
-		this.contenedorSec = new ContenedorDeCartas[TableroRegiment.CANTIDAD_DE_FILAS_SEC][TableroRegiment.CANTIDAD_DE_COLUMNAS_SEC];
+		this.contenedorSec = new ContenedorDeCartas[SubtableroSecundario.CANTIDAD_DE_FILAS][SubtableroSecundario.CANTIDAD_DE_COLUMNAS];
 		this.inicializarLayout();
 		this.inicializarTableroSec();
 	}
@@ -35,13 +35,13 @@ public class TableroSecundarioGrafico extends JPanel {
 
 	private void inicializarTableroSec()
 	{
-		for (int fila = 0; fila < TableroRegiment.CANTIDAD_DE_FILAS_SEC; fila++)
-			for (int columna = 0; columna < TableroRegiment.CANTIDAD_DE_COLUMNAS_SEC; columna++)
+		for (int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++)
+			for (int columna = 0; columna < SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++)
 				contenedorSec[fila][columna] = new ContenedorDeCartas();
 		
-		for ( int fila = 0; fila < TableroRegiment.CANTIDAD_DE_FILAS_SEC; fila++ )
+		for ( int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++ )
 		{
-			for ( int columna = 0; columna < TableroRegiment.CANTIDAD_DE_COLUMNAS_SEC; columna++ )
+			for ( int columna = 0; columna < SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++ )
 			{
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.insets = new Insets(5, 5, 5, 5);

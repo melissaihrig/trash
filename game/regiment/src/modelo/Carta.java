@@ -1,12 +1,11 @@
 package modelo;
 
 public class Carta {
-	
+
 	private int valor;
 	private PaloDeCarta palo;
 	
-	public Carta( int valor, PaloDeCarta palo )
-	{
+	public Carta(int valor, PaloDeCarta palo) {
 		this.valor = valor;
 		this.palo = palo;
 	}
@@ -29,9 +28,14 @@ public class Carta {
 	public PaloDeCarta getPaloDeCarta() {
 		return this.palo;
 	}
+	
+	public boolean esDelMismoPaloQue( Carta carta ) {
+		return this.getPaloDeCarta() == carta.getPaloDeCarta();
+	}
 
 	@Override
 	public String toString() {
-		return "Valor: " + valor + " Palo: " + palo;
+		return "[" + valor + "; " + palo + "]";
 	}
+
 }

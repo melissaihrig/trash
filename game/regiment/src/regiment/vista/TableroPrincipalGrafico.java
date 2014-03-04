@@ -7,6 +7,7 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 import regiment.modelo.TableroRegiment;
+import regiment.modelo.TableroRegiment.SubtableroPrincipal;
 
 @SuppressWarnings("serial")
 public class TableroPrincipalGrafico extends JPanel {
@@ -18,16 +19,16 @@ public class TableroPrincipalGrafico extends JPanel {
 	{
 		super();
 
-		this.contenedorPpal = new ContenedorDeCartas[TableroRegiment.CANTIDAD_DE_FILAS_PPAL][TableroRegiment.CANTIDAD_DE_COLUMNAS_PPAL];
+		this.contenedorPpal = new ContenedorDeCartas[SubtableroPrincipal.CANTIDAD_DE_FILAS][SubtableroPrincipal.CANTIDAD_DE_COLUMNAS];
 		this.inicializarLayout();
 		this.inicializarTableroPpalVacio();
 	}
 	
 	public void repartirCartas(TableroRegiment tablero)
 	{
-		for (int fila = 0; fila < TableroRegiment.CANTIDAD_DE_FILAS_PPAL; fila++)
-			for (int columna = 0; columna < TableroRegiment.CANTIDAD_DE_COLUMNAS_PPAL; columna++)
-				contenedorPpal[fila][columna].addCartas(tablero.getTableroPpal(fila, columna));
+//		for (int fila = 0; fila < SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++)
+//			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
+//				contenedorPpal[fila][columna].addCartas(tablero.subtableroPpal.getPila(fila, columna).get);
 	}
 
 	private void inicializarLayout()
@@ -42,13 +43,13 @@ public class TableroPrincipalGrafico extends JPanel {
 
 	private void inicializarTableroPpalVacio()
 	{
-		for (int fila = 0; fila < TableroRegiment.CANTIDAD_DE_FILAS_PPAL; fila++)
-			for (int columna = 0; columna < TableroRegiment.CANTIDAD_DE_COLUMNAS_PPAL; columna++)
+		for (int fila = 0; fila < SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++)
+			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
 				contenedorPpal[fila][columna] = new ContenedorDeCartas();
 		
-		for ( int fila = 0; fila < TableroRegiment.CANTIDAD_DE_FILAS_PPAL; fila++ )
+		for ( int fila = 0; fila < SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++ )
 		{
-			for ( int columna = 0; columna < TableroRegiment.CANTIDAD_DE_COLUMNAS_PPAL; columna++ )
+			for ( int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++ )
 			{
 				GridBagConstraints gbc = new GridBagConstraints();
 				gbc.insets = new Insets(8, 8, 8, 8);

@@ -1,49 +1,104 @@
 package regiment.modelo;
 
-import java.util.ArrayList;
-
 import modelo.Carta;
+import modelo.CartaException;
 import modelo.Tablero;
-
-
-
 
 public class TableroRegiment implements Tablero {
 	
-	public static int CANTIDAD_DE_FILAS_PPAL = 3;
-	public static int CANTIDAD_DE_COLUMNAS_PPAL = 8;
-	
-	public static int CANTIDAD_DE_FILAS_SEC = 4;
-	public static int CANTIDAD_DE_COLUMNAS_SEC = 2;
-	
-	private ArrayList<Carta> tableroPpal[][];
-	private ArrayList<Carta> tableroSec[][];
+	public final SubtableroPrincipal subtableroPpal;
+	public final SubtableroSecundario subtableroSec;
 	
 	public TableroRegiment() 
 	{
-		this.tableroPpal = new ArrayList[CANTIDAD_DE_FILAS_PPAL][CANTIDAD_DE_COLUMNAS_PPAL];
-		this.tableroSec = new ArrayList[CANTIDAD_DE_FILAS_SEC][CANTIDAD_DE_COLUMNAS_SEC];
+		this.subtableroPpal = new SubtableroPrincipal();
+		this.subtableroSec = new SubtableroSecundario();
+	}
+	
+	interface Subtablero {
+		void setCarta( int fila, int columna, Carta carta) throws CartaException;
+		Pila getPila( int fila, int columna);
+	}
+	
+	public class SubtableroPrincipal implements Subtablero {
+
+		public static final int CANTIDAD_DE_FILAS = 3;
+		public static final int CANTIDAD_DE_COLUMNAS = 8;
+
+		private Pila tablero[][];
 		
-		this.inicializarTablero(CANTIDAD_DE_FILAS_PPAL, CANTIDAD_DE_COLUMNAS_PPAL, tableroPpal);
-		this.inicializarTablero(CANTIDAD_DE_FILAS_SEC, CANTIDAD_DE_COLUMNAS_SEC, tableroSec);
-	}
+		private SubtableroPrincipal() 
+		{
+			this.tablero = new Pila[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
 
-	public void setTableroPpal( int fila, int columna, Carta carta) {
-		this.tableroPpal[fila][columna].add(carta);
-	}
+			/* fila superior del tablero */
+			for ( int columna = 0; columna < CANTIDAD_DE_COLUMNAS; columna++ ) 
+				tablero[0][columna] = new PilaDeRelaciones(0, columna);
+			
+			/* fila inferior del tablero */
+			for ( int columna = 0; columna < CANTIDAD_DE_COLUMNAS; columna++ ) 
+				tablero[2][columna] = new PilaDeRelaciones(2, columna);
+			
+			/* fila del medio del tablero */
+			for ( int columna = 0; columna < CANTIDAD_DE_COLUMNAS; columna++ )
+				tablero[1][columna] = new PilaDelMedio(this, 1, columna);
+			
+		}
 
-	public ArrayList<Carta> getTableroPpal( int fila, int columna) {
-		return this.tableroPpal[fila][columna];
+		public void setCarta( int fila, int columna, Carta carta) throws CartaException {
+			this.tablero[fila][columna].agregarCarta(carta);
+		}
+		
+		public Pila getPila( int fila, int columna) {
+			return this.tablero[fila][columna];
+		}
+		
 	}
 	
-	public ArrayList<Carta> getTableroSec( int fila, int columna) {
-		return this.tableroSec[fila][columna];
+	public class SubtableroSecundario implements Subtablero {
+		
+		public static final int CANTIDAD_DE_FILAS = 4;
+		public static final int CANTIDAD_DE_COLUMNAS = 2;
+
+		private Pila tablero[][];
+		
+		private SubtableroSecundario() 
+		{
+			this.tablero = new Pila[CANTIDAD_DE_FILAS][CANTIDAD_DE_COLUMNAS];
+
+			/* columna de Ases */
+			for ( int fila = 0; fila < CANTIDAD_DE_FILAS; fila++ )
+				tablero[fila][0] = new PilaDeAses(fila, 0);
+			
+			/* columna de Kes */
+			for ( int fila = 0; fila < CANTIDAD_DE_FILAS; fila++ )
+				tablero[fila][1] = new PilaDeKes(fila, 1);		
+		}
+
+		public void setCarta( int fila, int columna, Carta carta) throws CartaException {
+			this.tablero[fila][columna].agregarCarta(carta);
+		}
+		
+		public Pila getPila( int fila, int columna) {
+			return this.tablero[fila][columna];
+		}
 	}
 	
-	private void inicializarTablero( int cantidadDeFilas, int cantidadDeColumnas, ArrayList<Carta>[][] tablero)
-	{
-		for (int fila = 0; fila < cantidadDeFilas; fila++ )
-			for (int columna = 0; columna < cantidadDeColumnas; columna++)
-				tablero[fila][columna] = new ArrayList<>();
+	public String toString() {
+		
+		String tablero = "Arriba \n";
+		for (int i = 0; i < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; i++) 			
+			tablero += " " + subtableroPpal.getPila(0, i);
+		
+		tablero +=  "\n Medio \n";
+		for (int i = 0; i < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; i++) 
+			tablero += " " + subtableroPpal.getPila(1, i) + "\n";
+
+		tablero +=  "\n Bajo \n";
+		for (int i = 0; i < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; i++)			
+			tablero += " " + subtableroPpal.getPila(2, i);
+
+		return tablero;
 	}
+
 }

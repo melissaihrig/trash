@@ -1,7 +1,7 @@
 package regiment.controlador;
 
+import modelo.Baraja;
 import modelo.BarajaInglesa;
-import modelo.Mazo;
 import regiment.modelo.DistribuidorRegiment;
 import regiment.modelo.TableroRegiment;
 import regiment.vista.Mesa;
@@ -24,9 +24,9 @@ public class ControladorRegiment {
 	
 	public void juegoNuevo() 
 	{
-		Mazo mazo = new BarajaInglesa( 2 );
-		mazo.mezclar();
-		this.tablero = (TableroRegiment) mazo.repartirCartas( new DistribuidorRegiment() );
+		Baraja baraja = new BarajaInglesa( 2 );
+		baraja.mezclar();
+		this.tablero = (TableroRegiment) baraja.repartirCartas( new DistribuidorRegiment() );
 
 		mesa.setJuegoNuevo( this.tablero );
 	}

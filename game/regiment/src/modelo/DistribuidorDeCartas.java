@@ -2,5 +2,5 @@ package modelo;
 
 public interface DistribuidorDeCartas {
 
-	public Tablero ejecutarLogica( Mazo mazo );
+	public Tablero repartir( Baraja baraja );
 }

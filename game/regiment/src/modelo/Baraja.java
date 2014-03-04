@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class Mazo {
+public abstract class Baraja {
 
 	private List<Carta> cartas;
 	
-	public Mazo()
+	public Baraja()
 	{
 		this.cartas = new LinkedList<>();
 	}
@@ -22,7 +22,7 @@ public abstract class Mazo {
 		{
 			numeroCarta = (int) Math.floor( Math.random() * cantidadDeCartas );
 			mazoMezclado.add( this.cartas.get( numeroCarta ) );
-			this.cartas.remove(numeroCarta);
+			this.cartas.remove( numeroCarta );
 			cantidadDeCartas = this.getCantidadDeCartas();		
 		}
 		
@@ -31,7 +31,7 @@ public abstract class Mazo {
 	
 	public Tablero repartirCartas( DistribuidorDeCartas distribuidor )
 	{
-		return distribuidor.ejecutarLogica( this );
+		return distribuidor.repartir( this );
 	}
 	
 	public Carta getCartaDeArriba() {
