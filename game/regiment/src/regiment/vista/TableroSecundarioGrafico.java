@@ -11,13 +11,22 @@ import regiment.modelo.TableroRegiment.SubtableroSecundario;
 @SuppressWarnings("serial")
 public class TableroSecundarioGrafico extends JPanel {
 
-	private ContenedorDeCartas contenedorSec[][];
+	private PilaGrafica contenedorSec[][];
 
 	public TableroSecundarioGrafico() 
 	{
 		super();
 
-		this.contenedorSec = new ContenedorDeCartas[SubtableroSecundario.CANTIDAD_DE_FILAS][SubtableroSecundario.CANTIDAD_DE_COLUMNAS];
+		this.contenedorSec = new PilaGrafica[SubtableroSecundario.CANTIDAD_DE_FILAS][SubtableroSecundario.CANTIDAD_DE_COLUMNAS];
+		this.inicializarLayout();
+		this.inicializarTableroSec();
+	}
+	
+	public TableroSecundarioGrafico(SubtableroSecundario subtableroSec) 
+	{
+		super();
+
+		this.contenedorSec = new PilaGrafica[SubtableroSecundario.CANTIDAD_DE_FILAS][SubtableroSecundario.CANTIDAD_DE_COLUMNAS];
 		this.inicializarLayout();
 		this.inicializarTableroSec();
 	}
@@ -37,7 +46,7 @@ public class TableroSecundarioGrafico extends JPanel {
 	{
 		for (int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++)
 			for (int columna = 0; columna < SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++)
-				contenedorSec[fila][columna] = new ContenedorDeCartas();
+				contenedorSec[fila][columna] = new PilaGrafica();
 		
 		for ( int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++ )
 		{

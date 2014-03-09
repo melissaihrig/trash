@@ -57,6 +57,10 @@ public abstract class Pila {
 	public int getCantidadDeCartas() {
 		return this.cartas.size();
 	}
+
+	public Stack<Carta> getCartas() {
+		return cartas;
+	}
 	
 	public String toString() {
 		return cartas.toString(); 

@@ -38,12 +38,7 @@ public abstract class Baraja {
 		return this.cartas.remove(0);
 	}
 	
-	/**
-	 * 
-	 * @param cartaABuscar 
-	 * @return la cantidad de veces que se encuentra esa carta en el mazo.
-	 */
-	public int tieneLaCarta( Carta cartaABuscar )
+	int tieneLaCarta( Carta cartaABuscar )
 	{
 		int cantidad = 0;
 		

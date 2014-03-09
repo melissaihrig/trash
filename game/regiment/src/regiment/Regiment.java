@@ -8,5 +8,4 @@ public class Regiment {
 	{
 		new ControladorRegiment();
 	}
-
 }
