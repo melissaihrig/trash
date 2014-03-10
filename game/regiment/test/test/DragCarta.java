@@ -22,7 +22,7 @@ public class DragCarta extends JPanel {
 		
 		CartaGrafica carta = new CartaInglesaGrafica( new Carta(8, PaloDeCartaInglesa.CORAZON) );
 		
-		carta.addManejadorDeEventos( new ManejadorDeEventosDeCarta(carta) ) ; 
+		carta.agregarManejadorDeEventos( new ManejadorDeEventosDeCarta(carta) ) ; 
 		carta.setLocation(99, 93);
 		add(carta);
 	}

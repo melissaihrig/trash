@@ -31,7 +31,7 @@ public abstract class CartaGrafica extends JLabel {
 		return carta;
 	}
 
-	public void addManejadorDeEventos( MouseAdapter manejador )
+	public void agregarManejadorDeEventos( MouseAdapter manejador )
 	{
 		this.addMouseListener( manejador );
 		this.addMouseMotionListener( manejador );

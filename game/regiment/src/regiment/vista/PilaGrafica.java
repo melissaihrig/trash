@@ -7,6 +7,7 @@ import java.util.Stack;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import regiment.evento.ManejadorDeEventosDeCarta;
 import regiment.modelo.Pila;
 
 import modelo.Carta;
@@ -60,8 +61,8 @@ public class PilaGrafica extends JPanel {
 		{
 			cartaGrafica = new CartaInglesaGrafica(carta);
 			this.cartas.push(cartaGrafica);
-		
 			this.agregarComponente(cartaGrafica);
+			cartaGrafica.agregarManejadorDeEventos( new ManejadorDeEventosDeCarta(cartaGrafica) );
 		}
 		
 	}
