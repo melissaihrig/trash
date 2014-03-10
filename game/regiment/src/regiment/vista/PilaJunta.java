@@ -1,6 +1,5 @@
 package regiment.vista;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import regiment.modelo.Pila;

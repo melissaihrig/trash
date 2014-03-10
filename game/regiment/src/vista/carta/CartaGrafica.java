@@ -6,15 +6,13 @@ import javax.swing.JLabel;
 
 import modelo.Carta;
 
-
 import vista.UtilVista;
 
-
+@SuppressWarnings("serial")
 public abstract class CartaGrafica extends JLabel {
 	
 	private Carta carta;
 	
-
 	public CartaGrafica( Carta carta )
 	{
 		super();

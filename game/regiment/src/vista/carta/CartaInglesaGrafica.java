@@ -12,7 +12,6 @@ public class CartaInglesaGrafica extends CartaGrafica {
 		
 		this.setImagenCarta( this.generarPath() );
 		super.setSize(super.getMaximumSize());
-		this.setSize(100, 100);
 	}
 
 	private String generarPath()
@@ -26,4 +25,5 @@ public class CartaInglesaGrafica extends CartaGrafica {
 		
 		return path;
 	}
+	
 }

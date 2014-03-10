@@ -5,15 +5,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import regiment.modelo.TableroRegiment;
+import vista.UtilVista;
 
 @SuppressWarnings("serial")
 public class TableroGrafico extends JPanel {
 
-//	private TableroPrincipalGrafico tableroPpal;
-//	private TableroSecundarioGrafico tableroSec;
+	static int ANCHO_CASILLA;
+	static int ALTO_CASILLA;
+	static int MARGEN = 8;
 	
 	public TableroGrafico(TableroRegiment tablero) {
 		super();
@@ -27,6 +30,8 @@ public class TableroGrafico extends JPanel {
 	
 	private void inicializar(TableroRegiment tablero) 
 	{
+		setTamanoCasilla();
+		
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0};
 		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
@@ -54,4 +59,15 @@ public class TableroGrafico extends JPanel {
 		add(tableroSec, gbc_lblSec);
 		
 	}
+	
+	private void setTamanoCasilla() {
+		
+		JLabel fondo = new JLabel();
+		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA ) );
+		fondo.setSize(fondo.getMaximumSize());
+		
+		ANCHO_CASILLA = fondo.getWidth();
+		ALTO_CASILLA = fondo.getHeight();
+	}
+
 }

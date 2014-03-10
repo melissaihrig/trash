@@ -43,8 +43,7 @@ public class PilaGrafica extends JPanel {
 	{
 		fondo = new JLabel();
 		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA ) );
-//		fondo.setSize(fondo.getMaximumSize());
-		fondo.setSize(100, 100);
+		fondo.setSize(fondo.getMaximumSize());
 		
 		this.setSize(fondo.getSize());
 		this.agregarComponente(fondo);

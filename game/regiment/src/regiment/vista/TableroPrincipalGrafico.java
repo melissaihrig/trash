@@ -1,7 +1,5 @@
 package regiment.vista;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -42,7 +40,7 @@ public class TableroPrincipalGrafico extends JPanel {
 			for ( int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++ )
 			{
 				GridBagConstraints gbc = new GridBagConstraints();
-				gbc.insets = new Insets(8, 8, 8, 8);
+				gbc.insets = new Insets(TableroGrafico.MARGEN, TableroGrafico.MARGEN, TableroGrafico.MARGEN, TableroGrafico.MARGEN);
 				gbc.fill = GridBagConstraints.BOTH;
 				gbc.gridx = columna;
 				gbc.gridy = fila;
@@ -54,33 +52,31 @@ public class TableroPrincipalGrafico extends JPanel {
 	private void inicializarContenedor(SubtableroPrincipal subtableroPpal)
 	{
 		for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-			contenedorPpal[0][columna] = new PilaGrafica();
-		
-		inicializarMedio(subtableroPpal);
+			contenedorPpal[0][columna] =  new PilaEscalera(subtableroPpal.getPila(0, columna));
 		
 		for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-			contenedorPpal[2][columna] = new PilaGrafica();
-	}
-	
-	private void inicializarMedio(SubtableroPrincipal subtableroPpal) {
+			contenedorPpal[1][columna] = new PilaJunta(subtableroPpal.getPila(1, columna));	
+		
 		for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-			//contenedorPpal[1][columna] = new PilaJunta(subtableroPpal.getPila(1, columna));
-			contenedorPpal[1][columna] = new PilaJunta();
+			contenedorPpal[2][columna] = new PilaEscalera(subtableroPpal.getPila(2, columna));
 	}
 
 	private void inicializarContenedorVacio() {
 		for (int fila = 0; fila < SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++)
 			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-				contenedorPpal[fila][columna] = new PilaGrafica();
+				contenedorPpal[fila][columna] = new PilaJunta();
 	}
 	
 	private void inicializarLayout()
 	{
+		int altoCasilla = 2 * TableroGrafico.MARGEN + TableroGrafico.ALTO_CASILLA;
+		int anchoCasilla = 2 * TableroGrafico.MARGEN + TableroGrafico.ANCHO_CASILLA;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[] {0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.columnWidths = new int[]{anchoCasilla, anchoCasilla, anchoCasilla, anchoCasilla, anchoCasilla, anchoCasilla, anchoCasilla, anchoCasilla};
+		gridBagLayout.rowHeights = new int[]{altoCasilla, altoCasilla, altoCasilla};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0};
 		setLayout(gridBagLayout);
 	}
 	

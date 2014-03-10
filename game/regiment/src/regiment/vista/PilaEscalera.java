@@ -36,4 +36,10 @@ public class PilaEscalera extends PilaGrafica {
 		componente.setLocation(0,0);
 		this.add(componente);
 	}
+	
+	public void agregarCartas(Pila pila) {
+		this.setLayout(null);
+		super.agregarCartas(pila);
+		reordenarDibujado();
+	}
 }

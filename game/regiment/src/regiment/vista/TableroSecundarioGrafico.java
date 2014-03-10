@@ -33,10 +33,13 @@ public class TableroSecundarioGrafico extends JPanel {
 	
 	private void inicializarLayout()
 	{
+		int altoCasilla = 2 * TableroGrafico.MARGEN + TableroGrafico.ALTO_CASILLA;
+		int anchoCasilla = 2 * TableroGrafico.MARGEN + TableroGrafico.ANCHO_CASILLA;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[] {0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{anchoCasilla, anchoCasilla};
+		gridBagLayout.rowHeights = new int[] {altoCasilla, altoCasilla, altoCasilla, altoCasilla};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 		
 		setLayout(gridBagLayout);
