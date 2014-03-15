@@ -42,5 +42,12 @@ public abstract class CartaGrafica extends JLabel {
 	public void setPosicionAnterior(Point posicionAnterior) {
 		this.posicionAnterior = posicionAnterior;
 	}
+	
+	public Point getMedio() {
+		int x_medio = getX() + getWidth() / 2;
+		int y_medio = getY() + getHeight() / 2;
+		
+		return new Point(x_medio, y_medio);
+	}
 
 }

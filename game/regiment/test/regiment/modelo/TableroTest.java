@@ -242,6 +242,52 @@ public class TableroTest {
 		assertTrue( mazoDestino2.getCantidadDeCartas() == 1 );
 	}
 	
+	/* Prueba: 
+	 * 	mando el As de diamante al mismo lugar. 
+	 * 
+	 * Resultado:
+	 * 	el As sigue en el mismo lugar.*/
+
+	@Test
+	public void testMoverAlMismoLugar() throws CartaException  {
+		
+		Pila mazoOrigen1 = tablero.subtableroPpal.getPila(0, 0);
+		Carta diamante_1 = mazoOrigen1.getUltimaCarta();
+		
+		assertTrue( diamante_1.equals( new Carta( 1, PaloDeCartaInglesa.DIAMANTE ) ) );
+
+		mazoOrigen1.moverUltimaCartaA(mazoOrigen1);
+		assertTrue( mazoOrigen1.estaVacio() == false );
+		assertTrue( mazoOrigen1.getCantidadDeCartas() == 1 );
+	}
+
+	/* Prueba: 
+	 * 	mando el As de diamante al tablero secundario. Lo que deja un espacio libre en (0,0)
+	 * 	muevo el 8 de diamante que está en (0,1) a (0,0)
+	 * 
+	 * Resultado:
+	 * 	el movimiento no puede realizarse.*/
+	@Test (expected = CartaException.class) 
+	public void testMoviementoAlCostado() throws CartaException  {
+		
+		Pila mazoOrigen1 = tablero.subtableroPpal.getPila(0, 0);
+		Pila mazoOrigen2 = tablero.subtableroPpal.getPila(0, 1);
+		Carta diamante_1 = mazoOrigen1.getUltimaCarta();
+		Carta diamante_8 = mazoOrigen2.getUltimaCarta();
+		Pila mazoDestino1 = tablero.subtableroSec.getPila(0, 0);
+		Pila mazoDestino2 = mazoOrigen1;
+		
+		assertTrue( diamante_1.equals( new Carta( 1, PaloDeCartaInglesa.DIAMANTE ) ) );
+		assertTrue( diamante_8.equals( new Carta( 8, PaloDeCartaInglesa.DIAMANTE ) ) );
+
+		mazoOrigen1.moverUltimaCartaA(mazoDestino1);
+		assertTrue( mazoOrigen1.estaVacio() == true );
+		
+		mazoOrigen2.moverUltimaCartaA(mazoDestino2);
+		assertTrue( mazoDestino2.getCantidadDeCartas() == 1 );
+		assertTrue( mazoOrigen1.estaVacio() == true );
+	}
+	
 	@Test
 	public void testJuegoNormal() throws CartaException  {
 		

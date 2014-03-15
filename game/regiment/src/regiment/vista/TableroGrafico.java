@@ -35,32 +35,45 @@ public class TableroGrafico extends JPanel {
 	
 	public void moverCarta(CartaRegiment carta) {
 		
-		PilaGrafica pila;
+		PilaGrafica pila = this.getPilaDestino(carta);
 		
+		if (pila == null)
+			return;
+		
+		try {
+			pila.moverCarta(carta);
+		} catch (CartaException e) {
+			carta.setLocation(carta.getPosicionAnterior());
+			e.printStackTrace();
+		}
+	}
+	
+	private PilaGrafica getPilaDestino(CartaRegiment carta) {
+		
+		PilaGrafica pila;
+		Point puntoMedio = carta.getMedio();
+
 		for(int fila = 0; fila < TableroRegiment.SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++) {
 			for(int columna = 0; columna < TableroRegiment.SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++) {
+
 				pila = tableroPpal.getPilaGrafica(fila, columna);
-				try {
-					pila.moverCarta(carta);
-				} catch (CartaException e) {
-					carta.setLocation(carta.getPosicionAnterior());
-					e.printStackTrace();
-				}
+
+				if (pila.estaDentroDeLaPila(puntoMedio.x, puntoMedio.y)) 
+					return pila;
 			}
 		}
 		
 		for(int fila = 0; fila < TableroRegiment.SubtableroSecundario.CANTIDAD_DE_FILAS; fila++) {
 			for(int columna = 0; columna < TableroRegiment.SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++) {
+				
 				pila = tableroSec.getPilaGrafica(fila, columna);
-				try {
-					pila.moverCarta(carta);
 
-				} catch (CartaException e) {
-					carta.setLocation(carta.getPosicionAnterior());
-					e.printStackTrace();
-				}
+				if (pila.estaDentroDeLaPila(puntoMedio.x, puntoMedio.y))
+					return pila;
 			}
 		}
+		
+		return null;
 	}
 		
 	private void inicializarParametros() {

@@ -22,17 +22,25 @@ public class PilaDeRelaciones extends Pila {
 	@Override
 	public void verificarRecibirCarta(Pila origen) throws CartaException {
 		
+		verificarSiEsOtraPilaDeRelaciones( origen );
+		
 		if ( this.estaVacio() ) 
 			return;
 		
 		Carta cartaDeArriba = this.getUltimaCarta();
 		Carta cartaAAgregar = origen.getUltimaCarta();
 		
-		verificarSiMismoPalo( cartaDeArriba, cartaAAgregar ); 
+		verificarSiMismoPalo( cartaDeArriba, cartaAAgregar );
 		
 		/* es la carta inmediatamente superior/inferior de la carta de más arriba */
 		if ( Math.abs( cartaDeArriba.getValor() - cartaAAgregar.getValor() ) != 1 ) 
 			throw new CartaException("No se puede agregar la carta porque no son inmediatamente consecuentes. Carta de arriba: " + cartaDeArriba.toString() + " carta a agregar: " + cartaAAgregar.toString() );		
+	}
+
+	private void verificarSiEsOtraPilaDeRelaciones(Pila origen) throws CartaException {
+		
+		if ( this.estaVacio() && (origen.getFila() == 0 || origen.getFila() == 2))
+			throw new CartaException("Movimiento inválido.");		
 	}
 
 	@Override

@@ -22,6 +22,9 @@ public abstract class Pila {
 
 	public final void moverUltimaCartaA( Pila pilaDestino ) throws CartaException 
 	{
+		if (pilaDestino == this)
+			return;
+		
 		verificarSacarUltimaCarta( pilaDestino );
 		pilaDestino.verificarRecibirCarta( this );
 		pilaDestino.agregarCarta(getUltimaCarta());

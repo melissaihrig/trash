@@ -79,25 +79,16 @@ public abstract class PilaGrafica {
 	
 	public abstract void reordenarDibujado();
 
-	public void moverCarta(CartaRegiment carta) throws CartaException {
+	void moverCarta(CartaRegiment carta) throws CartaException {
 		
-		int x = carta.getX() + carta.getWidth() / 2;
-		int y = carta.getY() + carta.getHeight() / 2;
-		
-		PilaGrafica pila;
-		
-		if ( estaDentroDeLaPila(x, y) ) {
-			carta.getPila().getPila().moverUltimaCartaA( this.pila );
-			pila = carta.getPila();
-			pila.getCartas().pop();
-			carta.setLocation(this.punto);
-			carta.setPosicionAnterior(this.punto);
-			agregarCarta(carta);
-			reordenarDibujado();			
-		}
+		carta.getPila().getPila().moverUltimaCartaA( this.pila );
+		carta.setLocation(this.punto);
+		carta.setPosicionAnterior(this.punto);
+		agregarCarta(carta);
+		reordenarDibujado();			
 	}
 	
-	private boolean estaDentroDeLaPila( int x, int y ) {
+	boolean estaDentroDeLaPila( int x, int y ) {
 		
 		int minX = this.punto.x - TableroGrafico.MARGEN;
 		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN;
@@ -112,6 +103,7 @@ public abstract class PilaGrafica {
 	}
 	
 	private void agregarCarta( CartaRegiment carta ) {
+		carta.getPila().getCartas().pop();
 		carta.setOrden(cartas.size());
 		cartas.push(carta);
 		carta.setPila(this);
