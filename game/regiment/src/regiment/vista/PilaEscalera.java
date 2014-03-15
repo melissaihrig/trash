@@ -1,45 +1,26 @@
 package regiment.vista;
 
-import java.awt.Color;
-import java.awt.Component;
-
 import regiment.modelo.Pila;
 
-@SuppressWarnings("serial")
 public class PilaEscalera extends PilaGrafica {
-
-	public PilaEscalera() {
-		super(null);
-	}
 	
 	public PilaEscalera(Pila pila) {
-		super(null, pila);
+		super(pila);
 		reordenarDibujado();
 	}
 	
-	private void reordenarDibujado() {
+	public void reordenarDibujado() {
 	/* como se dibuja último el primer componente agregado, este queda por encima 
 	 * de los demás. Entonces, es necesario darlo vuelta ya que queremos dibujar 
 	 * el último componente último*/	
-		int index = this.getComponentCount();
-		for (Component componente: this.getComponents()) 
-		{
-			index--;
-			this.setComponentZOrder(componente, index);
-		}
-		
-		this.setBackground(new Color (120,12,12));
-		this.setSize(220, 200);
-	}
-	
-	protected void agregarComponente(Component componente) {
-		componente.setLocation(0,0);
-		this.add(componente);
-	}
-	
-	public void agregarCartas(Pila pila) {
-		this.setLayout(null);
-		super.agregarCartas(pila);
-		reordenarDibujado();
+//		int index = this.getComponentCount();
+//		for (Component componente: this.getComponents()) 
+//		{
+//			index--;
+//			this.setComponentZOrder(componente, index);
+//		}
+//		
+//		this.setBackground(new Color (120,12,12));
+//		this.setSize(220, 200);
 	}
 }

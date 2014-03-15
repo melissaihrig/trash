@@ -1,43 +1,25 @@
 package regiment.vista;
 
-import java.awt.Component;
-
 import regiment.modelo.Pila;
+import vista.carta.CartaGrafica;
 
-@SuppressWarnings("serial")
 public class PilaJunta extends PilaGrafica {
 
-	public PilaJunta() {
-		super(null);
-	}
-	
 	public PilaJunta(Pila pila) {
-		super(null, pila);
-//		reordenarDibujado();
+		super(pila);
 	}
 	
-	private void reordenarDibujado() {
+	public void reordenarDibujado() {
 	/* como se dibuja último el primer componente agregado, este queda por encima 
 	 * de los demás. Entonces, es necesario darlo vuelta ya que queremos dibujar 
 	 * el último componente último*/	
-		int index = this.getComponentCount();
-		for (Component componente: this.getComponents()) 
+		int index = this.getCartas().size();
+		
+		for (CartaGrafica carta : this.getCartas()) 
 		{
 			index--;
-			this.setComponentZOrder(componente, index);
+			this.getContenedor().setComponentZOrder(carta, index);
 		}
 		
-	}
-	
-	public void agregarCartas(Pila pila) {
-		this.setLayout(null);
-		super.agregarCartas(pila);
-		reordenarDibujado();
-	}
-
-	
-	protected void agregarComponente(Component componente) {
-		componente.setLocation(0,0);
-		this.add(componente);
 	}
 }

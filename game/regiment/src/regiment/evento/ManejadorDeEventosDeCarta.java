@@ -31,5 +31,9 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 	{
 		posicionInicialDrag = e.getPoint();
 	}
+	
+	protected CartaGrafica getCarta() {
+		return carta;
+	}
 
 }

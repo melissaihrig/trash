@@ -1,74 +1,115 @@
 package regiment.vista;
 
-import java.awt.Component;
-import java.awt.LayoutManager;
+import java.awt.GridBagConstraints;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.util.Stack;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import regiment.evento.ManejadorDeEventosDeCarta;
+import regiment.evento.EventoCartaRegiment;
 import regiment.modelo.Pila;
 
 import modelo.Carta;
+import modelo.CartaException;
 
 import vista.UtilVista;
+import vista.carta.CartaGrafica;
 import vista.carta.CartaInglesaGrafica;
 
-@SuppressWarnings("serial")
-public class PilaGrafica extends JPanel {
+public abstract class PilaGrafica {
 
 	private Stack<CartaInglesaGrafica> cartas = new Stack<>();
+	private JPanel contenedor;
 	private JLabel fondo;
 	private Pila pila;
+	private Point punto;
 	
-	public PilaGrafica() {
-		
-		super();
-		this.iniciliazarGrafica();
-	}
+	public PilaGrafica() {} //TODO borrar
 	
-	public PilaGrafica(LayoutManager layout) {
-		
-		super(layout);
-		this.iniciliazarGrafica();
+	public PilaGrafica(Pila pila) {
+		this.pila = pila;
 	}
 
-	public PilaGrafica(LayoutManager layout, Pila pila) {
-		
-		this(layout);
-		this.agregarCartas(pila);
-	}
-
-	private void iniciliazarGrafica() 
+	private void agregarFondo(JPanel tablero, Point punto) 
 	{
 		fondo = new JLabel();
 		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA ) );
 		fondo.setSize(fondo.getMaximumSize());
 		
-		this.setSize(fondo.getSize());
-		this.agregarComponente(fondo);
-		
+		fondo.setLocation(punto);
+		tablero.add(fondo); 
 	}
 	
-	public void agregarCartas(Pila pila) 
+	public void agregrarPila(JPanel tablero, GridBagConstraints gbc) {
+//		this.agregarCartas(tablero, gbc);
+//		this.agregarFondo(tablero, gbc);
+	}
+
+	public void agregrarPila(TableroGrafico tablero, Point punto ) {
+		this.contenedor = tablero;
+		this.punto = punto;
+		this.agregarCartas(tablero, punto);
+		this.agregarFondo(tablero, punto);
+	}
+	
+	private void agregarCartas(TableroGrafico tablero, Point punto) 
 	{
-		this.pila = pila;
-		
-		CartaInglesaGrafica cartaGrafica;
+		CartaRegiment cartaGrafica;
 		
 		for(Carta carta: pila.getCartas())
 		{
-			cartaGrafica = new CartaInglesaGrafica(carta);
-			this.cartas.push(cartaGrafica);
-			this.agregarComponente(cartaGrafica);
-			cartaGrafica.agregarManejadorDeEventos( new ManejadorDeEventosDeCarta(cartaGrafica) );
+			cartaGrafica = new CartaRegiment(carta, this);
+			cartas.push(cartaGrafica);
+			cartaGrafica.setLocation(punto);
+			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica, tablero));
+			tablero.add(cartaGrafica);
 		}
-		
 	}
 	
-	protected void agregarComponente(Component componente) {
-		this.add(componente);
+	public void agregarManejadorDeEventos( MouseAdapter manejador ) {
+		
+		for(CartaGrafica carta: cartas)
+			carta.agregarManejadorDeEventos(manejador);
+	}
+	
+	protected Stack<CartaInglesaGrafica> getCartas() {
+		return cartas;
 	}
 
+	protected JPanel getContenedor() {
+		return contenedor;
+	}
+	
+	public abstract void reordenarDibujado();
+
+	public void moverCarta(CartaRegiment carta, Point punto) throws CartaException {
+		
+		int x = carta.getX() + carta.getWidth() / 2;
+		int y = carta.getY() + carta.getHeight() / 2;
+		
+		if ( estaDentroDeLaPila(x, y) ) {
+			System.out.println("pila: " + this.pila.getColumna() + " " + this.pila.getFila());
+			carta.getPila().getPila().moverUltimaCartaA( this.pila );
+		}
+	}
+	
+	private boolean estaDentroDeLaPila( int x, int y ) {
+		
+		int minX = this.punto.x - TableroGrafico.MARGEN;
+		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN;
+		int minY = this.punto.y - TableroGrafico.MARGEN;
+		int maxY = this.punto.y + fondo.getHeight() + TableroGrafico.MARGEN; 
+	
+//		System.out.println("x: " + x + " y: " + y);
+//		System.out.println("borde x : " + minX + " borde x der: " + maxX );
+//		System.out.println("borde y : " + minY + " borde y abajo: " + maxY );
+		
+		return (x >= minX && x <= maxX && y >= minY && y <= maxY);
+	}
+
+	public Pila getPila() {
+		return pila;
+	}
 }
