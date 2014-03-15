@@ -2,6 +2,7 @@ package vista.carta;
 
 import vista.UtilVista;
 
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import modelo.Carta;
 public abstract class CartaGrafica extends JLabel {
 	
 	private Carta carta;
+	private Point posicionAnterior;
 	
 	public CartaGrafica( Carta carta )
 	{
@@ -31,6 +33,14 @@ public abstract class CartaGrafica extends JLabel {
 	{
 		this.addMouseListener( manejador );
 		this.addMouseMotionListener( manejador );
+	}
+
+	public Point getPosicionAnterior() {
+		return posicionAnterior;
+	}
+
+	public void setPosicionAnterior(Point posicionAnterior) {
+		this.posicionAnterior = posicionAnterior;
 	}
 
 }

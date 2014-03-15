@@ -16,4 +16,9 @@ public class CartaRegiment extends CartaInglesaGrafica {
 	public PilaGrafica getPila() {
 		return pila;
 	}
+
+	void setPila(PilaGrafica pilaGrafica) {
+		this.pila = pilaGrafica;
+		
+	}
 }

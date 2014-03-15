@@ -16,7 +16,7 @@ public class EventoCartaRegiment extends ManejadorDeEventosDeCarta{
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		contenedor.moverCarta( (CartaRegiment) this.getCarta(), e.getPoint());
+		contenedor.moverCarta( (CartaRegiment) this.getCarta() );
 	}
 
 

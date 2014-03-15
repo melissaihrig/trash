@@ -63,6 +63,7 @@ public abstract class PilaGrafica {
 			cartaGrafica = new CartaRegiment(carta, this);
 			cartas.push(cartaGrafica);
 			cartaGrafica.setLocation(punto);
+			cartaGrafica.setPosicionAnterior(punto);
 			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica, tablero));
 			tablero.add(cartaGrafica);
 		}
@@ -84,7 +85,7 @@ public abstract class PilaGrafica {
 	
 	public abstract void reordenarDibujado();
 
-	public void moverCarta(CartaRegiment carta, Point punto) throws CartaException {
+	public void moverCarta(CartaRegiment carta) throws CartaException {
 		
 		int x = carta.getX() + carta.getWidth() / 2;
 		int y = carta.getY() + carta.getHeight() / 2;
@@ -92,6 +93,8 @@ public abstract class PilaGrafica {
 		if ( estaDentroDeLaPila(x, y) ) {
 			System.out.println("pila: " + this.pila.getColumna() + " " + this.pila.getFila());
 			carta.getPila().getPila().moverUltimaCartaA( this.pila );
+			carta.setPila( this );
+			carta.setLocation(this.punto);
 		}
 	}
 	
@@ -101,10 +104,6 @@ public abstract class PilaGrafica {
 		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN;
 		int minY = this.punto.y - TableroGrafico.MARGEN;
 		int maxY = this.punto.y + fondo.getHeight() + TableroGrafico.MARGEN; 
-	
-//		System.out.println("x: " + x + " y: " + y);
-//		System.out.println("borde x : " + minX + " borde x der: " + maxX );
-//		System.out.println("borde y : " + minY + " borde y abajo: " + maxY );
 		
 		return (x >= minX && x <= maxX && y >= minY && y <= maxY);
 	}
