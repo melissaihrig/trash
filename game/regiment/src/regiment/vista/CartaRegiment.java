@@ -7,6 +7,7 @@ import vista.carta.CartaInglesaGrafica;
 public class CartaRegiment extends CartaInglesaGrafica {
 
 	private PilaGrafica pila;
+	private int orden = 0;
 	
 	public CartaRegiment(Carta carta, PilaGrafica pila) {
 		super(carta);
@@ -20,5 +21,13 @@ public class CartaRegiment extends CartaInglesaGrafica {
 	void setPila(PilaGrafica pilaGrafica) {
 		this.pila = pilaGrafica;
 		
+	}
+
+	int getOrden() {
+		return orden;
+	}
+
+	void setOrden(int orden) {
+		this.orden = orden;
 	}
 }

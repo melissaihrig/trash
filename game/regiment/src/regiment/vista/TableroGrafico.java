@@ -54,6 +54,7 @@ public class TableroGrafico extends JPanel {
 				pila = tableroSec.getPilaGrafica(fila, columna);
 				try {
 					pila.moverCarta(carta);
+
 				} catch (CartaException e) {
 					carta.setLocation(carta.getPosicionAnterior());
 					e.printStackTrace();
@@ -127,13 +128,13 @@ public class TableroGrafico extends JPanel {
 		private void inicializarContenedor(SubtableroPrincipal subtableroPpal)
 		{
 			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-				contenedorPpal[0][columna] =  new PilaEscalera(subtableroPpal.getPila(0, columna));
+				contenedorPpal[0][columna] =  new PilaEscaleraArriba(subtableroPpal.getPila(0, columna));
 			
 			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
 				contenedorPpal[1][columna] = new PilaJunta(subtableroPpal.getPila(1, columna));	
 			
 			for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
-				contenedorPpal[2][columna] = new PilaEscalera(subtableroPpal.getPila(2, columna));
+				contenedorPpal[2][columna] = new PilaEscaleraAbajo(subtableroPpal.getPila(2, columna));
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package regiment.vista;
 
-import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.util.Stack;
@@ -16,17 +15,14 @@ import modelo.CartaException;
 
 import vista.UtilVista;
 import vista.carta.CartaGrafica;
-import vista.carta.CartaInglesaGrafica;
 
 public abstract class PilaGrafica {
 
-	private Stack<CartaInglesaGrafica> cartas = new Stack<>();
+	private Stack<CartaRegiment> cartas = new Stack<>();
 	private JPanel contenedor;
 	private JLabel fondo;
 	private Pila pila;
-	private Point punto;
-	
-	public PilaGrafica() {} //TODO borrar
+	private Point punto = new Point();
 	
 	public PilaGrafica(Pila pila) {
 		this.pila = pila;
@@ -41,11 +37,6 @@ public abstract class PilaGrafica {
 		fondo.setLocation(punto);
 		tablero.add(fondo); 
 	}
-	
-	public void agregrarPila(JPanel tablero, GridBagConstraints gbc) {
-//		this.agregarCartas(tablero, gbc);
-//		this.agregarFondo(tablero, gbc);
-	}
 
 	public void agregrarPila(TableroGrafico tablero, Point punto ) {
 		this.contenedor = tablero;
@@ -57,6 +48,7 @@ public abstract class PilaGrafica {
 	private void agregarCartas(TableroGrafico tablero, Point punto) 
 	{
 		CartaRegiment cartaGrafica;
+		int orden = 1;
 		
 		for(Carta carta: pila.getCartas())
 		{
@@ -65,7 +57,9 @@ public abstract class PilaGrafica {
 			cartaGrafica.setLocation(punto);
 			cartaGrafica.setPosicionAnterior(punto);
 			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica, tablero));
+			cartaGrafica.setOrden(orden);
 			tablero.add(cartaGrafica);
+			orden++;
 		}
 	}
 	
@@ -75,7 +69,7 @@ public abstract class PilaGrafica {
 			carta.agregarManejadorDeEventos(manejador);
 	}
 	
-	protected Stack<CartaInglesaGrafica> getCartas() {
+	protected Stack<CartaRegiment> getCartas() {
 		return cartas;
 	}
 
@@ -90,11 +84,16 @@ public abstract class PilaGrafica {
 		int x = carta.getX() + carta.getWidth() / 2;
 		int y = carta.getY() + carta.getHeight() / 2;
 		
+		PilaGrafica pila;
+		
 		if ( estaDentroDeLaPila(x, y) ) {
-			System.out.println("pila: " + this.pila.getColumna() + " " + this.pila.getFila());
 			carta.getPila().getPila().moverUltimaCartaA( this.pila );
-			carta.setPila( this );
+			pila = carta.getPila();
+			pila.getCartas().pop();
 			carta.setLocation(this.punto);
+			carta.setPosicionAnterior(this.punto);
+			agregarCarta(carta);
+			reordenarDibujado();			
 		}
 	}
 	
@@ -110,5 +109,19 @@ public abstract class PilaGrafica {
 
 	public Pila getPila() {
 		return pila;
+	}
+	
+	private void agregarCarta( CartaRegiment carta ) {
+		carta.setOrden(cartas.size());
+		cartas.push(carta);
+		carta.setPila(this);
+	}
+	
+	protected void dibujarFondoAtras() {
+		contenedor.setComponentZOrder(fondo, cartas.size());
+	}
+	
+	protected Point getPunto() {
+		return punto;
 	}
 }

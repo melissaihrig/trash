@@ -1,7 +1,6 @@
 package regiment.vista;
 
 import regiment.modelo.Pila;
-import vista.carta.CartaGrafica;
 
 public class PilaJunta extends PilaGrafica {
 
@@ -13,12 +12,13 @@ public class PilaJunta extends PilaGrafica {
 	/* como se dibuja último el primer componente agregado, este queda por encima 
 	 * de los demás. Entonces, es necesario darlo vuelta ya que queremos dibujar 
 	 * el último componente último*/	
-		int index = this.getCartas().size();
+
+		int indice = 0, cantElementos = this.getCartas().size();
 		
-		for (CartaGrafica carta : this.getCartas()) 
+		for (CartaRegiment carta : this.getCartas()) 
 		{
-			index--;
-			this.getContenedor().setComponentZOrder(carta, index);
+			indice = cantElementos - carta.getOrden();
+			getContenedor().setComponentZOrder(carta, indice);
 		}
 		
 	}
