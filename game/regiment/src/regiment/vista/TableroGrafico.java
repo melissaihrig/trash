@@ -1,5 +1,7 @@
 package regiment.vista;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.JLabel;
@@ -26,6 +28,8 @@ public class TableroGrafico extends JPanel {
 	
 	private TableroPrincipalGrafico tableroPpal;
 	private TableroSecundarioGrafico tableroSec;
+	
+	private Image fondo;
 	
 	public TableroGrafico(TableroRegiment tablero) {
 		super();
@@ -88,7 +92,8 @@ public class TableroGrafico extends JPanel {
 	private void inicializar(TableroRegiment tablero) 
 	{
 		setLayout(null);
-		
+		fondo = UtilVista.crearImagenIcono("../../fondo00.png").getImage();
+
 		tableroPpal = new TableroPrincipalGrafico(tablero.subtableroPpal);
 		tableroSec = new TableroSecundarioGrafico(tablero.subtableroSec);
 	}
@@ -103,6 +108,12 @@ public class TableroGrafico extends JPanel {
 		ALTO_CASILLA = fondo.getHeight();
 	}
 
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(fondo, 0, 0, null);
+	}
+	
 	private class TableroPrincipalGrafico{
 
 		private PilaGrafica contenedorPpal[][];
