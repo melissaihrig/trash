@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import modelo.CartaException;
+import modelo.PaloDeCarta;
 import modelo.PaloDeCartaInglesa;
 
 import regiment.modelo.TableroRegiment;
@@ -68,25 +69,35 @@ public class TableroGrafico extends JPanel {
 	
 	public void moverCartaAPilaSecundaria(CartaRegiment carta) {
 		
-		PilaGrafica pila;
-		Point puntoMedio = carta.getMedio();
+		int fila = tableroSec.getFilaDelPalo(carta.getCarta().getPaloDeCarta());
 		
-		for(int fila = 0; fila < TableroRegiment.SubtableroSecundario.CANTIDAD_DE_FILAS; fila++) {
-			for(int columna = 0; columna < TableroRegiment.SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++) {
-				
-				pila = tableroSec.getPilaGrafica(fila, columna);
-
-				if (carta.getCarta().esDelMismoPaloQue(pila.getPila().getUltimaCarta())) {
-					
-					//pila.
-					//return pila;
-				}
-			}
+		PilaGrafica pilaDestinoAs = tableroSec.getPilaGrafica(fila, 0);
+		PilaGrafica pilaDestinoK = tableroSec.getPilaGrafica(fila, 1);
+		
+		boolean As = puedeRecibirCarta(carta, pilaDestinoAs);
+		boolean K = puedeRecibirCarta(carta, pilaDestinoK);
+		
+		try {
+			if (As && K)
+				throw new CartaException("La carta puede ir en dos lugares");
+			if (As)
+				pilaDestinoAs.moverCarta(carta);
+			else if (K)
+				pilaDestinoK.moverCarta(carta);
+		} catch (CartaException e) {
+			e.printStackTrace();
 		}
 		
-		//return null;
-		
-		
+	}
+
+	private boolean puedeRecibirCarta(CartaRegiment carta, PilaGrafica pilaDestinoAs) {
+		boolean As;
+		try {
+			As = pilaDestinoAs.sePuedeMoverCarta(carta); 
+		} catch (CartaException eAs) {
+			As = false;
+		}
+		return As;
 	}
 	
 	private PilaGrafica getPilaDestinoPorPosicion(CartaRegiment carta) {
@@ -252,6 +263,17 @@ public class TableroGrafico extends JPanel {
 			}
 			
 			return null;
+		}
+		
+		private int getFilaDelPalo(PaloDeCarta palo) {
+		
+			for(int fila = 0; fila < TableroRegiment.SubtableroSecundario.CANTIDAD_DE_FILAS; fila++) {
+				
+				if ( palo == ((PilaJuntaAcumulacion)getPilaGrafica(fila, 0)).getPalo() ) 
+					return fila;
+			}
+			
+			return -1;
 		}
 		
 		private PilaGrafica getPilaGrafica(int fila, int columna) {

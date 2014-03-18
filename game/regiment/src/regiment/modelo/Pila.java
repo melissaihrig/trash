@@ -22,13 +22,22 @@ public abstract class Pila {
 
 	public final void moverUltimaCartaA( Pila pilaDestino ) throws CartaException 
 	{
-		if (pilaDestino == this)
+		if (sePuedeMoverCarta(pilaDestino) == false)
 			return;
+		
+		pilaDestino.agregarCarta(getUltimaCarta());
+		sacarUltimaCarta();
+	}
+
+	public final boolean sePuedeMoverCarta( Pila pilaDestino ) throws CartaException 
+	{
+		if (pilaDestino == this)
+			return false;
 		
 		verificarSacarUltimaCarta( pilaDestino );
 		pilaDestino.verificarRecibirCarta( this );
-		pilaDestino.agregarCarta(getUltimaCarta());
-		sacarUltimaCarta();
+		
+		return true;
 	}
 	
 	public abstract void verificarRecibirCarta( Pila origen ) throws CartaException;

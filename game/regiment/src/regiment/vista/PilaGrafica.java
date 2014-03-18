@@ -88,6 +88,11 @@ public abstract class PilaGrafica {
 		reordenarDibujado();			
 	}
 	
+	boolean sePuedeMoverCarta(CartaRegiment carta) throws CartaException {
+		
+		return carta.getPila().getPila().sePuedeMoverCarta( this.pila );
+	}
+	
 	boolean estaDentroDeLaPila( int x, int y ) {
 		
 		int minX = this.punto.x - TableroGrafico.MARGEN_CASILLA;

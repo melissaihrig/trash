@@ -1,6 +1,7 @@
 package regiment.vista;
 
 import modelo.CartaException;
+import modelo.PaloDeCarta;
 import modelo.PaloDeCartaInglesa;
 import regiment.modelo.Pila;
 
@@ -19,7 +20,7 @@ public class PilaJuntaAcumulacion extends PilaJunta {
 		super.setPath(path);
 	}
 	
-	public PaloDeCartaInglesa getPalo() {
+	public PaloDeCarta getPalo() {
 		return palo;
 	}
 	
