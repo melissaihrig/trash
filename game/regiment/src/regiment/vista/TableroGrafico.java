@@ -56,13 +56,16 @@ public class TableroGrafico extends JPanel {
 		
 		PilaGrafica pila = this.getPilaDestinoPorPosicion(carta);
 		
-		if (pila == null)
+		if (pila == null) {
+			carta.setLocation(carta.getPosicionAnterior());
 			return;
+		}
 		
 		try {
 			pila.moverCarta(carta);
 		} catch (CartaException e) {
 			carta.setLocation(carta.getPosicionAnterior());
+			this.setMensaje(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -85,6 +88,7 @@ public class TableroGrafico extends JPanel {
 			else if (K)
 				pilaDestinoK.moverCarta(carta);
 		} catch (CartaException e) {
+			this.setMensaje(e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -304,4 +308,7 @@ public class TableroGrafico extends JPanel {
 		}
 	}
 
+	private void setMensaje(String mensaje) {
+		this.mensaje.setText(mensaje);
+	}
 }
