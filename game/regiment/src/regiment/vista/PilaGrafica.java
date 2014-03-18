@@ -23,6 +23,7 @@ public abstract class PilaGrafica {
 	private JLabel fondo;
 	private Pila pila;
 	private Point punto = new Point();
+	private String path = UtilVista.NAME_NOCARTA ;
 	
 	public PilaGrafica(Pila pila) {
 		this.pila = pila;
@@ -31,9 +32,8 @@ public abstract class PilaGrafica {
 	private void agregarFondo(JPanel tablero, Point punto) 
 	{
 		fondo = new JLabel();
-		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + UtilVista.NAME_NOCARTA ) );
+		fondo.setIcon( UtilVista.crearImagenIcono( UtilVista.PATH_FOLDER + path ) );
 		fondo.setSize(fondo.getMaximumSize());
-		
 		fondo.setLocation(punto);
 		tablero.add(fondo); 
 	}
@@ -90,10 +90,10 @@ public abstract class PilaGrafica {
 	
 	boolean estaDentroDeLaPila( int x, int y ) {
 		
-		int minX = this.punto.x - TableroGrafico.MARGEN;
-		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN;
-		int minY = this.punto.y - TableroGrafico.MARGEN;
-		int maxY = this.punto.y + fondo.getHeight() + TableroGrafico.MARGEN; 
+		int minX = this.punto.x - TableroGrafico.MARGEN_CASILLA;
+		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN_CASILLA;
+		int minY = this.punto.y - TableroGrafico.MARGEN_CASILLA;
+		int maxY = this.punto.y + fondo.getHeight() + TableroGrafico.MARGEN_CASILLA; 
 		
 		return (x >= minX && x <= maxX && y >= minY && y <= maxY);
 	}
@@ -115,5 +115,9 @@ public abstract class PilaGrafica {
 	
 	protected Point getPunto() {
 		return punto;
+	}
+	
+	protected void setPath(String path) {
+		this.path = path;
 	}
 }

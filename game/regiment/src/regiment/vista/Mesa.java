@@ -1,15 +1,12 @@
 package regiment.vista;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
 import regiment.modelo.TableroRegiment;
-import vista.UtilVista;
 
 @SuppressWarnings("serial")
 public class Mesa extends JFrame {
@@ -20,7 +17,7 @@ public class Mesa extends JFrame {
 	{
 		super();
 		setLayout(new BorderLayout());
-		
+			
 		JToolBar toolBar = new JToolBar();
 		toolBar.add(new JLabel("Nuevo"));
 		getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -28,42 +25,21 @@ public class Mesa extends JFrame {
 		this.tablero = new TableroGrafico(tablero);	
 		getContentPane().add(this.tablero, BorderLayout.CENTER);
 
-		getContentPane().add(new JLabel("mensajee!!"), BorderLayout.SOUTH);
-		
-		
-//		Dimension fullScreen = Toolkit.getDefaultToolkit().getScreenSize();
-
-//		this.setUndecorated(true);
+//		setUndecorated(true);
+//		setShape(new RoundRectangle2D.Double(0, 0, 900, 500, 100, 100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(this.tablero.getAncho(), this.tablero.getAlto() + 50);
 //	    this.setLocationRelativeTo(null);
-//        this.setSize(fullScreen)
-	    this.setSize(900, 600);	  
-
 	    
 //	    JButton salir = new JButton("salir");
 //	    salir.addMouseListener( new MouseAdapter() {
 //	    	
 //	    	 public void mousePressed(MouseEvent me) { 
-//	             exit(0);
+//	             System.exit(0);
 //	           } 
 //		});
 //	    
-//	    this.add(salir);
+//	    this.add(salir, BorderLayout.SOUTH);
 	}
-	
-
-
-	public void juegoNuevo()
-	{
-		
-	}
-
-	public void setJuegoNuevo(TableroRegiment tablero) 
-	{
-//		tableroPpal.repartirCartas(tablero);
-
-//		this.repaint();
-	}
-	
 
 }

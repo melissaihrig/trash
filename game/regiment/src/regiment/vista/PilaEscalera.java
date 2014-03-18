@@ -10,7 +10,7 @@ public abstract class PilaEscalera extends PilaGrafica {
 		super(pila);
 		reordenarDibujado();
 	}
-	
+			
 	public void reordenarDibujado() {
 		
 		int indiceMax = this.getCartas().size();

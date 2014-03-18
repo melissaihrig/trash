@@ -19,5 +19,13 @@ public class EventoCartaRegiment extends ManejadorDeEventosDeCarta{
 		contenedor.moverCarta( (CartaRegiment) this.getCarta() );
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent evt) {
+	      
+		if (evt.getClickCount() == 2) {
+			contenedor.moverCartaAPilaSecundaria( (CartaRegiment) this.getCarta());
+	    	  System.out.println("Se ha producido un doble click");
+	      }
+	}
 
 }
