@@ -45,7 +45,7 @@ public abstract class PilaGrafica {
 		this.agregarFondo(tablero, punto);
 	}
 	
-	private void agregarCartas(TableroGrafico tablero, Point punto) 
+	protected void agregarCartas(TableroGrafico tablero, Point punto) 
 	{
 		CartaRegiment cartaGrafica;
 		int orden = 1;

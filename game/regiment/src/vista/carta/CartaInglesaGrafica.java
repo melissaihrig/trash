@@ -11,6 +11,7 @@ public class CartaInglesaGrafica extends CartaGrafica {
 		super(carta);
 		
 		this.setImagenCarta( this.generarPath() );
+		this.setImagenCaraYContracara(this.generarPath(), generarPathContracara());
 		super.setSize(super.getMaximumSize());
 	}
 
@@ -26,4 +27,7 @@ public class CartaInglesaGrafica extends CartaGrafica {
 		return path;
 	}
 	
+	private String generarPathContracara() {
+		return UtilVista.PATH_FOLDER + "b2fv.png";
+	}
 }

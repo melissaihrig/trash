@@ -42,5 +42,4 @@ public class PilaDelMedio extends Pila {
 		}
 	}
 
-
 }

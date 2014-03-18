@@ -1,5 +1,9 @@
 package regiment.vista;
 
+import java.awt.Point;
+
+import modelo.CartaException;
+
 import regiment.modelo.Pila;
 
 public class PilaJunta extends PilaGrafica {
@@ -21,5 +25,22 @@ public class PilaJunta extends PilaGrafica {
 			getContenedor().setComponentZOrder(carta, indice);
 		}
 		
+	}
+
+	protected void agregarCartas(TableroGrafico tablero, Point punto) {
+		
+		super.agregarCartas(tablero, punto);
+//		for (CartaRegiment cartaGrafica: this.getCartas() ) {
+//			cartaGrafica.darVuelta();
+//		}
+//		
+//		this.getCartas().peek().darVuelta();
+//		
+	}
+	
+	void moverCarta(CartaRegiment carta) throws CartaException {
+		
+		super.moverCarta(carta);
+//		this.getCartas().peek().darVuelta();
 	}
 }

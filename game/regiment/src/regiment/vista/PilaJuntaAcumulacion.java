@@ -5,7 +5,7 @@ import modelo.PaloDeCarta;
 import modelo.PaloDeCartaInglesa;
 import regiment.modelo.Pila;
 
-public class PilaJuntaAcumulacion extends PilaJunta {
+public class PilaJuntaAcumulacion extends PilaGrafica {
 
 	private PaloDeCartaInglesa palo;
 	
@@ -16,7 +16,7 @@ public class PilaJuntaAcumulacion extends PilaJunta {
 	}
 	
 	private void cambiarPathIcono(PaloDeCartaInglesa palo) {
-		String path = palo.name().toLowerCase().substring(0, 1) + ".png";
+		String path = palo.name().toLowerCase().charAt(0) + ".png";
 		super.setPath(path);
 	}
 	
@@ -30,5 +30,20 @@ public class PilaJuntaAcumulacion extends PilaJunta {
 			throw new CartaException("Movimiento inválido");
 		
 		super.moverCarta(carta);
+	}
+	
+	public void reordenarDibujado() {
+	/* como se dibuja último el primer componente agregado, este queda por encima 
+	 * de los demás. Entonces, es necesario darlo vuelta ya que queremos dibujar 
+	 * el último componente último*/	
+
+		int indice = 0, cantElementos = this.getCartas().size();
+		
+		for (CartaRegiment carta : this.getCartas()) 
+		{
+			indice = cantElementos - carta.getOrden();
+			getContenedor().setComponentZOrder(carta, indice);
+		}
+		
 	}
 }
