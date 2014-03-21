@@ -30,6 +30,8 @@ public class PilaJuntaAcumulacion extends PilaGrafica {
 			throw new CartaException("Movimiento inválido");
 		
 		super.moverCarta(carta);
+		
+		
 	}
 	
 	public void reordenarDibujado() {
@@ -46,4 +48,5 @@ public class PilaJuntaAcumulacion extends PilaGrafica {
 		}
 		
 	}
+	
 }

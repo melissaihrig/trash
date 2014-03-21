@@ -87,13 +87,13 @@ public abstract class PilaGrafica {
 		agregarCarta(carta);
 		reordenarDibujado();
 		
-		System.out.println("Pila log: " + this.pila.toString());
-		System.out.println("Pila gra: ");
-		
-		for (CartaRegiment cartaG: this.cartas)
-		{
-			System.out.println(cartaG.getCarta() + " o: " + cartaG.getOrden());
-		}
+//		System.out.println("Pila log: " + this.pila.toString());
+//		System.out.println("Pila gra: ");
+//		
+//		for (CartaRegiment cartaG: this.cartas)
+//		{
+//			System.out.println(cartaG.getCarta() + " o: " + cartaG.getOrden());
+//		}
 	}
 	
 	boolean sePuedeMoverCarta(CartaRegiment carta) throws CartaException {

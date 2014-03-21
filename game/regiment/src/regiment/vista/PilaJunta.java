@@ -31,17 +31,22 @@ public class PilaJunta extends PilaGrafica {
 		
 		super.agregarCartas(tablero, punto);
 		for (CartaRegiment cartaGrafica: this.getCartas() ) {
-//			cartaGrafica.darVuelta();
+			cartaGrafica.darVuelta();
 		}
 		
-//		this.getUltimaCarta().darVuelta();
-//		
+		this.getUltimaCarta().darVuelta();
+		
+	}
+	
+	void sacarUltimaCarta() {
+		super.sacarUltimaCarta();
+		super.getUltimaCarta().darVuelta();
 	}
 	
 	void moverCarta(CartaRegiment carta) throws CartaException {
-		
+//		System.out.println(" mover carta del medio a otro lugar... ");
 		super.moverCarta(carta);
-		System.out.println(" dar vueltaa... ");
-		//this.getUltimaCarta().darVuelta();
+//		System.out.println(" dar vueltaa... ");
+//		this.getUltimaCarta().darVuelta();
 	}
 }
