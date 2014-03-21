@@ -24,6 +24,7 @@ public abstract class PilaGrafica {
 	private Pila pila;
 	private Point punto = new Point();
 	private String path = UtilVista.NAME_NOCARTA ;
+	private int alto = 0;
 	
 	public PilaGrafica(Pila pila) {
 		this.pila = pila;
@@ -43,6 +44,7 @@ public abstract class PilaGrafica {
 		this.punto = punto;
 		this.agregarCartas(tablero, punto);
 		this.agregarFondo(tablero, punto);
+		this.alto = this.fondo.getHeight();
 	}
 	
 	protected void agregarCartas(TableroGrafico tablero, Point punto) 
@@ -87,13 +89,7 @@ public abstract class PilaGrafica {
 		agregarCarta(carta);
 		reordenarDibujado();
 		
-//		System.out.println("Pila log: " + this.pila.toString());
-//		System.out.println("Pila gra: ");
-//		
-//		for (CartaRegiment cartaG: this.cartas)
-//		{
-//			System.out.println(cartaG.getCarta() + " o: " + cartaG.getOrden());
-//		}
+		alto = carta.getHeight() + carta.getY() - this.punto.y;
 	}
 	
 	boolean sePuedeMoverCarta(CartaRegiment carta) throws CartaException {
@@ -104,9 +100,9 @@ public abstract class PilaGrafica {
 	boolean estaDentroDeLaPila( int x, int y ) {
 		
 		int minX = this.punto.x - TableroGrafico.MARGEN_CASILLA;
-		int maxX = this.punto.x + fondo.getWidth() + TableroGrafico.MARGEN_CASILLA;
+		int maxX = this.punto.x + fondo.getWidth()  + TableroGrafico.MARGEN_CASILLA;
 		int minY = this.punto.y - TableroGrafico.MARGEN_CASILLA;
-		int maxY = this.punto.y + fondo.getHeight() + TableroGrafico.MARGEN_CASILLA; 
+		int maxY = this.punto.y + alto + TableroGrafico.MARGEN_CASILLA; 
 		
 		return (x >= minX && x <= maxX && y >= minY && y <= maxY);
 	}
@@ -119,7 +115,7 @@ public abstract class PilaGrafica {
 		carta.getPila().sacarUltimaCarta();
 		cartas.add(carta);
 		carta.setOrden(cartas.size());
-		carta.setPila(this);
+		carta.setPila(this);	
 	}
 	
 	void sacarUltimaCarta() {
