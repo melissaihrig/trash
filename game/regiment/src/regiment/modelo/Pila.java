@@ -23,7 +23,7 @@ public abstract class Pila {
 	public final void moverUltimaCartaA( Pila pilaDestino ) throws CartaException 
 	{
 		if (sePuedeMoverCarta(pilaDestino) == false)
-			return;
+			throw new CartaException("La pila destino y origen son las mismas."); 
 		
 		pilaDestino.agregarCarta(getUltimaCarta());
 		sacarUltimaCarta();

@@ -83,7 +83,7 @@ public class TableroGrafico extends JPanel {
 		try {
 			if (As && K)
 				throw new CartaException("La carta puede ir en dos lugares");
-			if (As)
+			else if (As)
 				pilaDestinoAs.moverCarta(carta);
 			else if (K)
 				pilaDestinoK.moverCarta(carta);

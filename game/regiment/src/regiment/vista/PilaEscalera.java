@@ -15,11 +15,13 @@ public abstract class PilaEscalera extends PilaGrafica {
 		
 		int indiceMax = this.getCartas().size();
 		int indice;
-		
+//System.out.println("REORDEN: ");		
 		for (CartaRegiment carta: this.getCartas()) 
 		{ 
 			indice = indiceMax - carta.getOrden();
 			getContenedor().setComponentZOrder(carta, indice);
+			
+//				System.out.println(carta.getCarta() + " o: " + carta.getOrden());
 		}
 		
 		reposicionar();

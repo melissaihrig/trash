@@ -2,7 +2,7 @@ package regiment.vista;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
-import java.util.Stack;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +18,7 @@ import vista.carta.CartaGrafica;
 
 public abstract class PilaGrafica {
 
-	private Stack<CartaRegiment> cartas = new Stack<>();
+	private ArrayList<CartaRegiment> cartas = new ArrayList<>();
 	private JPanel contenedor;
 	private JLabel fondo;
 	private Pila pila;
@@ -48,12 +48,12 @@ public abstract class PilaGrafica {
 	protected void agregarCartas(TableroGrafico tablero, Point punto) 
 	{
 		CartaRegiment cartaGrafica;
-		int orden = 1;
+		int orden = 0;
 		
 		for(Carta carta: pila.getCartas())
 		{
 			cartaGrafica = new CartaRegiment(carta, this);
-			cartas.push(cartaGrafica);
+			cartas.add(cartaGrafica);
 			cartaGrafica.setLocation(punto);
 			cartaGrafica.setPosicionAnterior(punto);
 			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica, tablero));
@@ -69,7 +69,7 @@ public abstract class PilaGrafica {
 			carta.agregarManejadorDeEventos(manejador);
 	}
 	
-	protected Stack<CartaRegiment> getCartas() {
+	protected ArrayList<CartaRegiment> getCartas() {
 		return cartas;
 	}
 
@@ -85,7 +85,15 @@ public abstract class PilaGrafica {
 		carta.setLocation(this.punto);
 		carta.setPosicionAnterior(this.punto);
 		agregarCarta(carta);
-		reordenarDibujado();			
+		reordenarDibujado();
+		
+		System.out.println("Pila log: " + this.pila.toString());
+		System.out.println("Pila gra: ");
+		
+		for (CartaRegiment cartaG: this.cartas)
+		{
+			System.out.println(cartaG.getCarta() + " o: " + cartaG.getOrden());
+		}
 	}
 	
 	boolean sePuedeMoverCarta(CartaRegiment carta) throws CartaException {
@@ -108,10 +116,20 @@ public abstract class PilaGrafica {
 	}
 	
 	private void agregarCarta( CartaRegiment carta ) {
-		carta.getPila().getCartas().pop();
+		carta.getPila().sacarUltimaCarta();
 		carta.setOrden(cartas.size());
-		cartas.push(carta);
+		cartas.add(carta);
 		carta.setPila(this);
+	}
+	
+	void sacarUltimaCarta() {
+		int ultimoIndice = this.getCartas().size() - 1;
+		this.getCartas().remove(ultimoIndice);
+	}
+	
+	CartaGrafica getUltimaCarta() {
+		int ultimoIndice = this.getCartas().size() - 1;
+		return this.getCartas().get(ultimoIndice);
 	}
 	
 	protected void dibujarFondoAtras() {

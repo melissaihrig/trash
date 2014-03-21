@@ -30,17 +30,18 @@ public class PilaJunta extends PilaGrafica {
 	protected void agregarCartas(TableroGrafico tablero, Point punto) {
 		
 		super.agregarCartas(tablero, punto);
-//		for (CartaRegiment cartaGrafica: this.getCartas() ) {
+		for (CartaRegiment cartaGrafica: this.getCartas() ) {
 //			cartaGrafica.darVuelta();
-//		}
-//		
-//		this.getCartas().peek().darVuelta();
+		}
+		
+//		this.getUltimaCarta().darVuelta();
 //		
 	}
 	
 	void moverCarta(CartaRegiment carta) throws CartaException {
 		
 		super.moverCarta(carta);
-//		this.getCartas().peek().darVuelta();
+		System.out.println(" dar vueltaa... ");
+		//this.getUltimaCarta().darVuelta();
 	}
 }

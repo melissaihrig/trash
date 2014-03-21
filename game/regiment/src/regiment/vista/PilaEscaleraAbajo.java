@@ -18,6 +18,7 @@ public class PilaEscaleraAbajo extends PilaEscalera{
 		for (CartaRegiment carta: this.getCartas()) 
 		{ 
 			carta.setLocation(new Point(x, y));
+			carta.setPosicionAnterior(new Point(x, y));
 			y += DIST_Y;
 		}
 	}
