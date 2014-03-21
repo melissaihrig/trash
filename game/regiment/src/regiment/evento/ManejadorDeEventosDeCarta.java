@@ -30,6 +30,7 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 	public void mousePressed(MouseEvent e) 
 	{
 		posicionInicialDrag = e.getPoint();
+		this.carta.getParent().setComponentZOrder(this.carta, 0);
 	}
 	
 	protected CartaGrafica getCarta() {

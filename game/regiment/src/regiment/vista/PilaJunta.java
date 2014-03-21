@@ -2,8 +2,6 @@ package regiment.vista;
 
 import java.awt.Point;
 
-import modelo.CartaException;
-
 import regiment.modelo.Pila;
 
 public class PilaJunta extends PilaGrafica {
@@ -43,10 +41,4 @@ public class PilaJunta extends PilaGrafica {
 		super.getUltimaCarta().darVuelta();
 	}
 	
-	void moverCarta(CartaRegiment carta) throws CartaException {
-//		System.out.println(" mover carta del medio a otro lugar... ");
-		super.moverCarta(carta);
-//		System.out.println(" dar vueltaa... ");
-//		this.getUltimaCarta().darVuelta();
-	}
 }

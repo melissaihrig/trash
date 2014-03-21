@@ -48,7 +48,7 @@ public abstract class PilaGrafica {
 	protected void agregarCartas(TableroGrafico tablero, Point punto) 
 	{
 		CartaRegiment cartaGrafica;
-		int orden = 0;
+		int orden = 1;
 		
 		for(Carta carta: pila.getCartas())
 		{
@@ -117,8 +117,8 @@ public abstract class PilaGrafica {
 	
 	private void agregarCarta( CartaRegiment carta ) {
 		carta.getPila().sacarUltimaCarta();
-		carta.setOrden(cartas.size());
 		cartas.add(carta);
+		carta.setOrden(cartas.size());
 		carta.setPila(this);
 	}
 	
