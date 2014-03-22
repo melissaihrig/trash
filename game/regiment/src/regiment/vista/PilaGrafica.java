@@ -111,7 +111,7 @@ public abstract class PilaGrafica {
 		return pila;
 	}
 	
-	private void agregarCarta( CartaRegiment carta ) {
+	protected void agregarCarta( CartaRegiment carta ) {
 		carta.getPila().sacarUltimaCarta();
 		cartas.add(carta);
 		carta.setOrden(cartas.size());

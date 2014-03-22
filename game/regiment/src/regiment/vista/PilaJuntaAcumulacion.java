@@ -49,4 +49,9 @@ public class PilaJuntaAcumulacion extends PilaGrafica {
 		
 	}
 	
+	protected void agregarCarta( CartaRegiment carta ) {
+		
+		super.agregarCarta(carta);
+		carta.sacarManejadorDeEventos();
+	}
 }

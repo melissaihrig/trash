@@ -44,6 +44,11 @@ public abstract class CartaGrafica extends JLabel {
 		this.addMouseMotionListener( manejador );
 	}
 
+	public void sacarManejadorDeEventos() {
+		this.removeMouseListener( this.getMouseListeners()[0] );
+		this.removeMouseMotionListener( this.getMouseMotionListeners()[0] );		
+	}
+	
 	public Point getPosicionAnterior() {
 		return posicionAnterior;
 	}
