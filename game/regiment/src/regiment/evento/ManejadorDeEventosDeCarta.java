@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import regiment.vista.CartaRegiment;
+
 import vista.carta.CartaGrafica;
 
 public class ManejadorDeEventosDeCarta extends MouseAdapter {
@@ -29,6 +31,9 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
+		if (this.getCarta() != ((CartaRegiment)this.getCarta()).getPila().getUltimaCarta())
+			return;
+		
 		posicionInicialDrag = e.getPoint();
 		this.carta.getParent().setComponentZOrder(this.carta, 0);
 	}

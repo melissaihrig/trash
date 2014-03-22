@@ -58,9 +58,9 @@ public abstract class PilaGrafica {
 			cartas.add(cartaGrafica);
 			cartaGrafica.setLocation(punto);
 			cartaGrafica.setPosicionAnterior(punto);
-			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica, tablero));
 			cartaGrafica.setOrden(orden);
 			tablero.add(cartaGrafica);
+			cartaGrafica.agregarManejadorDeEventos(new EventoCartaRegiment(cartaGrafica));
 			orden++;
 		}
 	}
@@ -119,11 +119,19 @@ public abstract class PilaGrafica {
 	}
 	
 	void sacarUltimaCarta() {
+		
+		if (this.getCartas().size() == 0)
+			return;
+		
 		int ultimoIndice = this.getCartas().size() - 1;
 		this.getCartas().remove(ultimoIndice);
 	}
 	
-	CartaGrafica getUltimaCarta() {
+	public CartaGrafica getUltimaCarta() {
+		
+		if (this.getCartas().size() == 0)
+			return null;
+		
 		int ultimoIndice = this.getCartas().size() - 1;
 		return this.getCartas().get(ultimoIndice);
 	}
