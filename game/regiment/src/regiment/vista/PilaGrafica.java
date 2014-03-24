@@ -24,7 +24,7 @@ public abstract class PilaGrafica {
 	private Pila pila;
 	private Point punto = new Point();
 	private String path = UtilVista.NAME_NOCARTA ;
-	private int alto = 0;
+	protected int alto = 0;
 	
 	public PilaGrafica(Pila pila) {
 		this.pila = pila;
@@ -88,8 +88,10 @@ public abstract class PilaGrafica {
 		carta.setPosicionAnterior(this.punto);
 		agregarCarta(carta);
 		reordenarDibujado();
-		
-		alto = carta.getHeight() + carta.getY() - this.punto.y;
+		setAlto(carta);
+	}
+	
+	protected void setAlto(CartaRegiment carta) {
 	}
 	
 	boolean sePuedeMoverCarta(CartaRegiment carta) throws CartaException {
@@ -146,5 +148,9 @@ public abstract class PilaGrafica {
 	
 	protected void setPath(String path) {
 		this.path = path;
+	}
+	
+	protected JLabel getFondo() {
+		return fondo;
 	}
 }

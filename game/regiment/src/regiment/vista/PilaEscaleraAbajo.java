@@ -22,4 +22,8 @@ public class PilaEscaleraAbajo extends PilaEscalera{
 			y += DIST_Y;
 		}
 	}
+	
+	protected void setAlto(CartaRegiment carta) {
+		this.alto = carta.getHeight() + carta.getY() - this.getPunto().y;
+	}
 }
