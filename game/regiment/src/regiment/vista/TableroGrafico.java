@@ -46,10 +46,13 @@ public class TableroGrafico extends JPanel {
 	private Image fondo;
 	private JLabel mensaje;
 	
+	TableroRegiment tablero;
+	
 	public TableroGrafico(TableroRegiment tablero) {
 		super();
 		inicializarParametros();
 		inicializar(tablero);
+		this.tablero = tablero;
 	}
 	
 	public void moverCarta(CartaRegiment carta) {
@@ -63,10 +66,14 @@ public class TableroGrafico extends JPanel {
 		
 		try {
 			pila.moverCarta(carta);
+			System.out.println("=======");
+			System.out.println(tablero);
+			System.out.println("=======");
 		} catch (CartaException e) {
 			carta.setLocation(carta.getPosicionAnterior());
 			this.setMensaje(e.getMessage());
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	

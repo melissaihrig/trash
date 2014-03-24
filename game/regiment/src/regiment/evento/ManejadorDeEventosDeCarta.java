@@ -21,6 +21,9 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 	@Override
 	public void mouseDragged(MouseEvent e)
 	{
+		if (!esLaUltimaCarta())
+			return;
+		
 		Point posicion = carta.getLocation();
 		posicion.translate(e.getX(), e.getY());
 		posicion.translate(-posicionInicialDrag.x, -posicionInicialDrag.y);
@@ -31,7 +34,7 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		if (this.getCarta() != ((CartaRegiment)this.getCarta()).getPila().getUltimaCarta())
+		if (!esLaUltimaCarta())
 			return;
 		
 		posicionInicialDrag = e.getPoint();
@@ -42,4 +45,7 @@ public class ManejadorDeEventosDeCarta extends MouseAdapter {
 		return carta;
 	}
 
+	protected boolean esLaUltimaCarta() {
+		return carta == ((CartaRegiment)carta).getPila().getUltimaCarta();
+	}
 }

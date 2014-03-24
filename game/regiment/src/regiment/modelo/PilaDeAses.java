@@ -20,7 +20,7 @@ public class PilaDeAses extends Pila {
 	@Override
 	public void verificarRecibirCarta(Pila origen) throws CartaException {
 		
-		if ( this.estaVacio() ) 
+		if ( this.estaVacia() ) 
 		{
 			if ( origen.getUltimaCarta().getValor() != As )
 				throw new CartaException("Se esperaba un As");
@@ -39,8 +39,11 @@ public class PilaDeAses extends Pila {
 
 	@Override
 	public void verificarSacarUltimaCarta(Pila pilaDestino) throws CartaException {
-		throw new CartaException("No se puede sacar cartas de esta pila");
+		throw new CartaException("No se puede sacar la carta de esta pila");
 	}
 
+	protected boolean esPilaAcumulacion() {
+		return true;
+	}
 
 }

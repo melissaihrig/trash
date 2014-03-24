@@ -20,13 +20,12 @@ public class PilaDeKes extends Pila {
 	@Override
 	public void verificarRecibirCarta(Pila origen) throws CartaException {
 		
-		if ( this.estaVacio() ) 
+		if ( this.estaVacia() ) 
 		{
 			if ( origen.getUltimaCarta().getValor() != K )
 				throw new CartaException("Se esperaba una K");
 			
 			return;
-				
 		}
 
 		Carta cartaDeArriba = this.getUltimaCarta();
@@ -43,5 +42,7 @@ public class PilaDeKes extends Pila {
 		throw new CartaException("No se puede sacar cartas de esta pila");
 	}
 
-
+	protected boolean esPilaAcumulacion() {
+		return true;
+	}
 }

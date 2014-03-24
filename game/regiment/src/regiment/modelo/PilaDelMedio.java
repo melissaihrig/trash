@@ -17,26 +17,38 @@ public class PilaDelMedio extends Pila {
 		throw new CartaException("No se puede colocar una carta acá");
 		
 	}
-
+	
+	//si el destino es una pila de acumulacion -> exception
+	//si destino es arriba y está vacío, ok
+	//si destino es abajo y está vacío, ok
+	//si destino es arriba de otra col, está vacía la columnas del medio
 	@Override
 	public void verificarSacarUltimaCarta(Pila pilaDestino) throws CartaException {
 
-		int colMazoOrigen = this.getColumna(), colMazoDestino = pilaDestino.getColumna();
-		int columnaInicial = ( colMazoOrigen < colMazoDestino )? colMazoOrigen: colMazoDestino;
-		int columnaFinal = ( colMazoOrigen > colMazoDestino )? colMazoOrigen: colMazoDestino;
+		/*una carta del medio solo puede ir a alguna pila de arriba o a una de abajo*/
+		if (pilaDestino.esPilaAcumulacion())
+			throw new CartaException("Movimiento inválido");
 		
-		verSiLugaresVacios(columnaInicial, columnaFinal);
+		/*si no va al tablero secundario el destino tiene que estar vacío*/
+		if (!pilaDestino.estaVacia())
+			throw new CartaException("Lugar ocupado");
 		
+		/*si la columna no es la misma que esta pila tengo que ver que 
+		 * las pilas del medio intermedias estén vacías*/ 
+		if (!(pilaDestino.getColumna() == this.getColumna())) {
+			verificarColumnaDistintaLugaresVacios(pilaDestino);
+		}
 	}
 
-	private void verSiLugaresVacios(int columnaInicial, int columnaFinal) throws CartaException 
+	private void verificarColumnaDistintaLugaresVacios(Pila pilaDestino) throws CartaException 
 	{
+		int colMazoOrigen = this.getColumna(), colMazoDestino = pilaDestino.getColumna();
+		int columnaInicial = ( colMazoOrigen < colMazoDestino )? colMazoOrigen + 1: colMazoDestino;
+		int columnaFinal = ( colMazoOrigen > colMazoDestino )? colMazoOrigen - 1: colMazoDestino;
+		
 		for ( int columna = columnaInicial; columna <= columnaFinal; columna++ ) 
 		{
-			boolean vacio1 = subtablero.getPila(0, columna).estaVacio();
-			boolean vacio2 = subtablero.getPila(2, columna).estaVacio();
-			
-			if ( !( vacio1 || vacio2 ) ) 
+			if ( !subtablero.getPila(1, columna).estaVacia() ) 
 				throw new CartaException("No se puede realizar el movimiento");
 			
 		}

@@ -21,35 +21,51 @@ public class PilaDeRelaciones extends Pila {
 
 	@Override
 	public void verificarRecibirCarta(Pila origen) throws CartaException {
+
+		/*no puedo recibir una carta de la pila de acumulación*/
+		verificarSiEsPilaAcumulacion( origen );
+
+		if (esPilaDelMedio(origen)) 
+		{
+			if (!this.estaVacia()) {
+				/* si es la pila del medio, solo puede colocar una carta si la pila
+				 * esta vacía*/
+				throw new CartaException("Lugar ocupado");
+			}
+		}
+		else 
+		{
+			/*no es una pila ni del medio ni de acumulación => es una pila  
+			 *de relación*/
+			if (this.estaVacia()) {
+				/*si está vacía no puedo colocar una carta que sea de otra pila
+				 * de relación*/
+				throw new CartaException("Movimiento inválido");
+			} 
+			else {
+				Carta cartaDeArriba = this.getUltimaCarta();
+				Carta cartaAAgregar = origen.getUltimaCarta();
+				
+				verificarSiMismoPalo( cartaDeArriba, cartaAAgregar );
+				
+				/* es la carta inmediatamente superior/inferior de la carta de más arriba */
+				if ( Math.abs( cartaDeArriba.getValor() - cartaAAgregar.getValor() ) != 1 ) 
+					throw new CartaException("No se puede agregar la carta porque no son inmediatamente consecuentes. Carta de arriba: " + cartaDeArriba.toString() + " carta a agregar: " + cartaAAgregar.toString() );				
+			}
+		}
 		
-		verificarSiEsOtraPilaDeRelaciones( origen );
-		
-		if ( this.estaVacio() ) 
-			return;
-		
-		Carta cartaDeArriba = this.getUltimaCarta();
-		Carta cartaAAgregar = origen.getUltimaCarta();
-		
-		verificarSiMismoPalo( cartaDeArriba, cartaAAgregar );
-		
-		/* es la carta inmediatamente superior/inferior de la carta de más arriba */
-		if ( Math.abs( cartaDeArriba.getValor() - cartaAAgregar.getValor() ) != 1 ) 
-			throw new CartaException("No se puede agregar la carta porque no son inmediatamente consecuentes. Carta de arriba: " + cartaDeArriba.toString() + " carta a agregar: " + cartaAAgregar.toString() );		
 	}
 
-	private void verificarSiEsOtraPilaDeRelaciones(Pila origen) throws CartaException {
-		
-		if ( this.estaVacio() && (origen.getFila() == 0 || origen.getFila() == 2))
-			throw new CartaException("Movimiento inválido.");		
+	private void verificarSiEsPilaAcumulacion(Pila origen) throws CartaException {
+		if (origen.esPilaAcumulacion())
+			throw new CartaException("Movimiento inválido");
 	}
 
+	private boolean esPilaDelMedio(Pila origen) {
+		return origen.getFila() == 1;
+	}
 	@Override
 	public void verificarSacarUltimaCarta(Pila pilaDestino) throws CartaException {
 		return;
 	}
-
-	
-
-
-
 }

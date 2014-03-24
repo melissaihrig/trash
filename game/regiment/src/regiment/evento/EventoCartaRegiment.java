@@ -26,7 +26,7 @@ public class EventoCartaRegiment extends ManejadorDeEventosDeCarta{
 	@Override
 	public void mouseClicked(MouseEvent evt) {
 	      
-		if (evt.getClickCount() == 2) {
+		if (evt.getClickCount() == 2 && esLaUltimaCarta()) {
 			contenedor.moverCartaAPilaSecundaria( (CartaRegiment) this.getCarta());
 		}
 	}

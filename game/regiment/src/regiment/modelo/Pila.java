@@ -44,26 +44,20 @@ public abstract class Pila {
 	
 	public abstract void verificarSacarUltimaCarta( Pila pilaDestino ) throws CartaException;
 	
-
-	protected void setCartas( Stack<Carta> cartas ) {
-		this.cartas = cartas;
-	}
-
 	public void agregarCarta( Carta carta ) throws CartaException {
 		this.cartas.push( carta );
 	}
-
-	protected void verificarSiMismoPalo( Carta cartaDeArriba, Carta cartaAAgregar ) throws CartaException {
-		if ( !cartaDeArriba.esDelMismoPaloQue( cartaAAgregar ) ) 
-			throw new CartaException("No se puede colocar esa carta. Tienen que ser del mismo palo. Carta de arriba: " + cartaDeArriba.toString() + " carta a agregar: " + cartaAAgregar.toString() );
-	}	
 	
 	public Carta sacarUltimaCarta() {
-		return this.cartas.pop();
+		if (!estaVacia())
+			return this.cartas.pop();
+		return null;
 	}
 	
 	public Carta getUltimaCarta() {
-		return this.cartas.peek();
+		if (!estaVacia())
+			return this.cartas.peek();
+		return null;
 	}
 	
 	public int getCantidadDeCartas() {
@@ -86,7 +80,20 @@ public abstract class Pila {
 		return columna;
 	}
 
-	public boolean estaVacio() {
+	public boolean estaVacia() {
 		return this.cartas.empty();
+	}
+	
+	protected void verificarSiMismoPalo( Carta cartaDeArriba, Carta cartaAAgregar ) throws CartaException {
+		if ( !cartaDeArriba.esDelMismoPaloQue( cartaAAgregar ) ) 
+			throw new CartaException("No se puede colocar esa carta. Tienen que ser del mismo palo. Carta de arriba: " + cartaDeArriba.toString() + " carta a agregar: " + cartaAAgregar.toString() );
+	}	
+	
+	protected void setCartas( Stack<Carta> cartas ) {
+		this.cartas = cartas;
+	}
+	
+	protected boolean esPilaAcumulacion() {
+		return false;
 	}
 }

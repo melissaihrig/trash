@@ -38,7 +38,9 @@ public class PilaJunta extends PilaGrafica {
 	
 	void sacarUltimaCarta() {
 		super.sacarUltimaCarta();
-		super.getUltimaCarta().darVuelta();
+		
+		if (super.getUltimaCarta() != null)
+			super.getUltimaCarta().darVuelta();
 	}
 	
 }

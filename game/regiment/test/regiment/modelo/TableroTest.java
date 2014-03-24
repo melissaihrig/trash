@@ -236,7 +236,7 @@ public class TableroTest {
 		assertTrue( diamante_Q.equals( new Carta( 12, PaloDeCartaInglesa.DIAMANTE ) ) );
 
 		mazoOrigen1.moverUltimaCartaA(mazoDestino1);
-		assertTrue( mazoOrigen1.estaVacio() == true );
+		assertTrue( mazoOrigen1.estaVacia() == true );
 		
 		mazoOrigen2.moverUltimaCartaA(mazoDestino2);
 		assertTrue( mazoDestino2.getCantidadDeCartas() == 1 );
@@ -249,16 +249,20 @@ public class TableroTest {
 	 * 	el As sigue en el mismo lugar.*/
 
 	@Test
-	public void testMoverAlMismoLugar() throws CartaException  {
+	public void testMoverAlMismoLugar()  {
 		
 		Pila mazoOrigen1 = tablero.subtableroPpal.getPila(0, 0);
 		Carta diamante_1 = mazoOrigen1.getUltimaCarta();
 		
 		assertTrue( diamante_1.equals( new Carta( 1, PaloDeCartaInglesa.DIAMANTE ) ) );
 
-		mazoOrigen1.moverUltimaCartaA(mazoOrigen1);
-		assertTrue( mazoOrigen1.estaVacio() == false );
-		assertTrue( mazoOrigen1.getCantidadDeCartas() == 1 );
+		try {
+			mazoOrigen1.moverUltimaCartaA(mazoOrigen1);
+			assertTrue( mazoOrigen1.estaVacia() == false );
+			assertTrue( mazoOrigen1.getCantidadDeCartas() == 1 );
+		} catch (CartaException e) {
+			assert(false);
+		}
 	}
 
 	/* Prueba: 
@@ -281,11 +285,11 @@ public class TableroTest {
 		assertTrue( diamante_8.equals( new Carta( 8, PaloDeCartaInglesa.DIAMANTE ) ) );
 
 		mazoOrigen1.moverUltimaCartaA(mazoDestino1);
-		assertTrue( mazoOrigen1.estaVacio() == true );
+		assertTrue( mazoOrigen1.estaVacia() == true );
 		
 		mazoOrigen2.moverUltimaCartaA(mazoDestino2);
 		assertTrue( mazoDestino2.getCantidadDeCartas() == 1 );
-		assertTrue( mazoOrigen1.estaVacio() == true );
+		assertTrue( mazoOrigen1.estaVacia() == true );
 	}
 	
 	@Test
@@ -348,5 +352,47 @@ public class TableroTest {
 
 	}
 	
+	/* Prueba: 
+	 * 	mando una carta que se encuentra en la posición (1,0) (fila del medio) a
+	 * 	la pila (0,7)
+	 * 	el resto de las pilas están vacías.
+	 * 
+	 * 
+	 * Resultado:
+	 * 	el movimiento puede realizarse.*/
+	@Test
+	public void testMovimientoMedioPilaVacia() throws CartaException {
+		TableroRegiment tablero = new TableroRegiment();
+		
+		tablero.subtableroPpal.setCarta(1, 0, new Carta(7, PaloDeCartaInglesa.DIAMANTE));
+		
+		Pila mazoOrigen = tablero.subtableroPpal.getPila(1, 0);
+		Pila mazoDestino = tablero.subtableroPpal.getPila(0, 7);
+
+		mazoOrigen.moverUltimaCartaA(mazoDestino);
+		assertTrue( mazoOrigen.getCantidadDeCartas() == 0 );	
+	}
+	
+	/* Prueba: 
+	 * 	mando una carta que se encuentra en la posición (1,0) (fila del medio) a
+	 * 	la pila (0,7)
+	 * 	la pila del medio (1,4) se encuentra ocupada
+	 * 
+	 * 
+	 * Resultado:
+	 * 	el movimiento no puede realizarse.*/
+	@Test (expected = CartaException.class) 
+	public void testMovimientoMedioPilaLlena() throws CartaException {
+		TableroRegiment tablero = new TableroRegiment();
+		
+		tablero.subtableroPpal.setCarta(1, 0, new Carta(7, PaloDeCartaInglesa.DIAMANTE));
+		tablero.subtableroPpal.setCarta(1, 4, new Carta(8, PaloDeCartaInglesa.DIAMANTE));
+		
+		Pila mazoOrigen = tablero.subtableroPpal.getPila(1, 0);
+		Pila mazoDestino = tablero.subtableroPpal.getPila(0, 7);
+
+		mazoOrigen.moverUltimaCartaA(mazoDestino);
+		assertTrue( mazoOrigen.getCantidadDeCartas() == 1 );	
+	}
 
 }
