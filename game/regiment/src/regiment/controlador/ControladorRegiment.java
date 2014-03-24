@@ -15,7 +15,7 @@ public class ControladorRegiment {
 	
 	private ControladorRegiment() 
 	{
-		tablero = this.juegoNuevo();
+		tablero = this.generarJuegoNuevo();
 		mesa = new Mesa(tablero);
 		mesa.setVisible(true);
 	}
@@ -28,11 +28,16 @@ public class ControladorRegiment {
 		return controlador;
 	}
 	
-	public TableroRegiment juegoNuevo() 
+	public TableroRegiment generarJuegoNuevo() 
 	{
 		Baraja baraja = new BarajaInglesa( 2 );
 		baraja.mezclar();
 		return (TableroRegiment) baraja.repartirCartas( new DistribuidorRegiment() );
 	}
 
+	public void juegoNuevo() {
+		
+		tablero = this.generarJuegoNuevo();
+		mesa.empezarJuegoNuevo(tablero);
+	}
 }

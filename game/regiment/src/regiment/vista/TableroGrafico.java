@@ -45,15 +45,19 @@ public class TableroGrafico extends JPanel {
 	private Image fondo;
 	private JLabel mensaje;
 	
-	TableroRegiment tablero;
-	
 	public TableroGrafico(TableroRegiment tablero) {
 		super();
 		inicializarParametros();
-		inicializar(tablero);
-		this.tablero = tablero;
+		inicializarGrafica();
+		inicializarTablero(tablero);
 	}
 	
+	private void inicializarTablero(TableroRegiment tablero) {
+		
+		tableroPpal = new TableroPrincipalGrafico(tablero.subtableroPpal);
+		tableroSec = new TableroSecundarioGrafico(tablero.subtableroSec);
+	}
+
 	public void moverCarta(CartaRegiment carta) {
 		
 		PilaGrafica pila = this.getPilaDestinoPorPosicion(carta);
@@ -65,9 +69,6 @@ public class TableroGrafico extends JPanel {
 		
 		try {
 			pila.moverCarta(carta);
-			System.out.println("=======");
-			System.out.println(tablero);
-			System.out.println("=======");
 		} catch (CartaException e) {
 			carta.setLocation(carta.getPosicionAnterior());
 			this.setMensaje(e.getMessage());
@@ -141,14 +142,11 @@ public class TableroGrafico extends JPanel {
 		return ALTO_TABLERO; 
 	}
 
-	private void inicializar(TableroRegiment tablero) 
+	private void inicializarGrafica() 
 	{
 		setLayout(null);
 		inicializarMensaje();
 		fondo = UtilVista.crearImagenIcono("../../fondo00.png").getImage();
-
-		tableroPpal = new TableroPrincipalGrafico(tablero.subtableroPpal);
-		tableroSec = new TableroSecundarioGrafico(tablero.subtableroSec);
 	}
 
 	private void inicializarMensaje() {
@@ -320,5 +318,18 @@ public class TableroGrafico extends JPanel {
 	
 	public int getMedioHorizontal(int ancho) {
 		return ( ANCHO_TABLERO - ancho ) / 2;
+	}
+
+	/* borra todos los elementos que se encuentran en el tablero*/
+	public void empezarJuegoNuevo(TableroRegiment tablero) {
+		borrarPilas();
+		inicializarTablero(tablero);
+		
+	}
+
+	private void borrarPilas() {
+		removeAll();
+		revalidate();
+		repaint();
 	}
 }

@@ -10,15 +10,18 @@ import regiment.modelo.TableroRegiment;
 @SuppressWarnings("serial")
 public class Mesa extends JFrame {
 	
+	private TableroGrafico tableroGrafico;
+	private JPanel menu;
+	
 	public Mesa(TableroRegiment tablero) 
 	{
 		super("Regiment");
 		setLayout(new BorderLayout());
 		
-		TableroGrafico tableroGrafico = new TableroGrafico(tablero);	
+		tableroGrafico = new TableroGrafico(tablero);
 		getContentPane().add(tableroGrafico, BorderLayout.CENTER);
 		
-		JPanel menu = new Menu();
+		menu = new Menu();
 		menu.setLocation(tableroGrafico.getMedioHorizontal(Menu.ANCHO), 1);
 		
 		tableroGrafico.add(menu);
@@ -30,9 +33,10 @@ public class Mesa extends JFrame {
 //	    this.setLocationRelativeTo(null);
 	    
 	}
-	
-	public void setTablero(TableroRegiment tablero) {
-		
+
+	public void empezarJuegoNuevo(TableroRegiment tablero) {
+		tableroGrafico.empezarJuegoNuevo(tablero);
+		tableroGrafico.add(menu);
 	}
 
 }
