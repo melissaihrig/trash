@@ -1,6 +1,5 @@
 package regiment.vista;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -26,7 +25,7 @@ public class TableroGrafico extends JPanel {
 	
 	static int MARGEN_CASILLA = 8;
 	
-	private static int MARGEN_SUPERIOR = 50;
+	private static int MARGEN_SUPERIOR = 80;
 	private static int MARGEN_INFERIOR = 50;
 	
 	private static int ALTO_MENSAJE = 30;
@@ -154,12 +153,12 @@ public class TableroGrafico extends JPanel {
 
 	private void inicializarMensaje() {
 
-		int x = ( ANCHO_TABLERO - ANCHO_MENSAJE ) / 2;
+		int x = getMedioHorizontal(ANCHO_MENSAJE);
 		int y = ALTO_TABLERO - ALTO_MENSAJE - MARGEN_CASILLA;
-		mensaje = new JLabel("mensajeeghhhhhhgjhjgj!!");
+		mensaje = new JLabel("");
 		mensaje.setHorizontalAlignment( SwingConstants.CENTER );
 		mensaje.setOpaque(true);
-		mensaje.setBackground(new Color(255,226,115, 100));
+		mensaje.setBackground(Tema.MARRON4_100);
 		mensaje.setBounds(x, y, ANCHO_MENSAJE, ALTO_MENSAJE);
 		
 		add(mensaje);
@@ -317,5 +316,9 @@ public class TableroGrafico extends JPanel {
 
 	private void setMensaje(String mensaje) {
 		this.mensaje.setText(mensaje);
+	}
+	
+	public int getMedioHorizontal(int ancho) {
+		return ( ANCHO_TABLERO - ancho ) / 2;
 	}
 }

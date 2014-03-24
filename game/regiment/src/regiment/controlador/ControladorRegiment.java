@@ -11,11 +11,21 @@ public class ControladorRegiment {
 	private Mesa mesa;
 	private TableroRegiment tablero;
 	
-	public ControladorRegiment() 
+	private static ControladorRegiment controlador = null;
+	
+	private ControladorRegiment() 
 	{
 		tablero = this.juegoNuevo();
 		mesa = new Mesa(tablero);
 		mesa.setVisible(true);
+	}
+	
+	public static ControladorRegiment getInstancia() {
+		
+		if (controlador == null)
+			controlador = new ControladorRegiment();
+		
+		return controlador;
 	}
 	
 	public TableroRegiment juegoNuevo() 

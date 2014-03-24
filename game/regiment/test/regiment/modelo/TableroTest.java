@@ -394,5 +394,4 @@ public class TableroTest {
 		mazoOrigen.moverUltimaCartaA(mazoDestino);
 		assertTrue( mazoOrigen.getCantidadDeCartas() == 1 );	
 	}
-
 }

@@ -6,6 +6,6 @@ public class Regiment {
 
 	public static void main(String[] args) 
 	{
-		new ControladorRegiment();
+		ControladorRegiment.getInstancia();
 	}
 }
