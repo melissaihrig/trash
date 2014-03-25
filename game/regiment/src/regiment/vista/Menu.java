@@ -39,8 +39,6 @@ public class Menu extends JPanel {
 		darFormatoA(juegoNuevo);
 		add(juegoNuevo);
 		
-		
-		
 		JLabel salir = new JLabel("Salir");
 		salir.addMouseListener(new MouseAdapter() {
 			@Override

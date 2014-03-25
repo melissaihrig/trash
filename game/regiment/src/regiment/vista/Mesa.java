@@ -26,7 +26,8 @@ public class Mesa extends JFrame {
 		menu.setLocation(posX, TableroGrafico.MARGEN_CASILLA);
 		
 		tableroGrafico.add(menu);
-
+		
+		this.setResizable(false);
 //		setUndecorated(true);
 //		setShape(new RoundRectangle2D.Double(0, 0, 900, 500, 100, 100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
