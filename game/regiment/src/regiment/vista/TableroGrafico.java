@@ -23,13 +23,13 @@ public class TableroGrafico extends JPanel {
 	private static int ANCHO_CASILLA;
 	private static int ALTO_CASILLA;
 	
-	static int MARGEN_CASILLA = 8;
+	public final static int MARGEN_CASILLA = 8;
 	
-	private static int MARGEN_SUPERIOR = 80;
-	private static int MARGEN_INFERIOR = 50;
+	private final static int MARGEN_SUPERIOR = 80;
+	private final static int MARGEN_INFERIOR = 50;
 	
-	private static int ALTO_MENSAJE = 30;
-	private static int ANCHO_MENSAJE = 700;
+	private final static int ALTO_MENSAJE = 30;
+	private final static int ANCHO_MENSAJE = 700;
 	
 	private int ALTO_TABLERO_SEC;
 	private int ANCHO_TABLERO_SEC;
@@ -132,6 +132,10 @@ public class TableroGrafico extends JPanel {
 		
 		ALTO_TABLERO = ALTO_TABLERO_SEC + MARGEN_SUPERIOR + MARGEN_INFERIOR;
 		ANCHO_TABLERO = ANCHO_TABLERO_PPAL + ANCHO_TABLERO_SEC; 
+	}
+	
+	public int getAnchoTableroSecundario() {
+		return ANCHO_TABLERO_SEC;
 	}
 	
 	int getAncho() {

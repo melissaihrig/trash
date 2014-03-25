@@ -20,8 +20,8 @@ import java.awt.GridLayout;
 public class Menu extends JPanel {
 	
 	public final static int TAMANO_LETRA = 14;
-	public final static int ANCHO = 200;
-	public final static int ALTO = 30;
+	public final static int ANCHO = 100;
+	public final static int ALTO = 60;
 	
 	
 	public Menu() {
@@ -34,7 +34,7 @@ public class Menu extends JPanel {
 				ControladorRegiment.getInstancia().juegoNuevo();
 			}
 		});
-		setLayout(new GridLayout(0, 2, 0, 0));
+		setLayout(new GridLayout(2, 0, 0, 4));
 		
 		darFormatoA(juegoNuevo);
 		add(juegoNuevo);

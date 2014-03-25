@@ -22,7 +22,8 @@ public class Mesa extends JFrame {
 		getContentPane().add(tableroGrafico, BorderLayout.CENTER);
 		
 		menu = new Menu();
-		menu.setLocation(tableroGrafico.getMedioHorizontal(Menu.ANCHO), 1);
+		int posX = tableroGrafico.getAncho() - tableroGrafico.getAnchoTableroSecundario() + (tableroGrafico.getAnchoTableroSecundario() - Menu.ANCHO)/2;
+		menu.setLocation(posX, TableroGrafico.MARGEN_CASILLA);
 		
 		tableroGrafico.add(menu);
 
