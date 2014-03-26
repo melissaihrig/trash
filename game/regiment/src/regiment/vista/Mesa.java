@@ -27,11 +27,16 @@ public class Mesa extends JFrame {
 		
 		tableroGrafico.add(menu);
 		
+		PanelDePuntaje panelDePuntaje = new PanelDePuntaje();
+		posX = tableroGrafico.getAncho() - tableroGrafico.getAnchoTableroSecundario() + (tableroGrafico.getAnchoTableroSecundario() - PanelDePuntaje.ANCHO)/2;
+		panelDePuntaje.setLocation(posX, tableroGrafico.getAltoTableroSecundario() + TableroGrafico.MARGEN_SUPERIOR + TableroGrafico.MARGEN_CASILLA);
+		tableroGrafico.setPanelPuntaje(panelDePuntaje);
+		
 		this.setResizable(false);
 //		setUndecorated(true);
 //		setShape(new RoundRectangle2D.Double(0, 0, 900, 500, 100, 100));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(tableroGrafico.getAncho(), tableroGrafico.getAlto() + 50);
+		this.setSize(tableroGrafico.getAncho(), tableroGrafico.getAlto() +  TableroGrafico.MARGEN_CASILLA * 10);
 //	    this.setLocationRelativeTo(null);
 	    
 	}

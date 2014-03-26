@@ -6,7 +6,6 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import modelo.CartaException;
 import modelo.PaloDeCarta;
@@ -25,11 +24,8 @@ public class TableroGrafico extends JPanel {
 	
 	public final static int MARGEN_CASILLA = 8;
 	
-	private final static int MARGEN_SUPERIOR = 80;
-	private final static int MARGEN_INFERIOR = 50;
-	
-	private final static int ALTO_MENSAJE = 30;
-	private final static int ANCHO_MENSAJE = 700;
+	public final static int MARGEN_SUPERIOR = 80;
+	public final static int MARGEN_INFERIOR = 50;
 	
 	private int ALTO_TABLERO_SEC;
 	private int ANCHO_TABLERO_SEC;
@@ -43,7 +39,9 @@ public class TableroGrafico extends JPanel {
 	private TableroSecundarioGrafico tableroSec;
 	
 	private Image fondo;
-	private JLabel mensaje;
+	
+	private PanelDePuntaje panelDePuntaje;
+	private int movimientos;
 	
 	public TableroGrafico(TableroRegiment tablero) {
 		super();
@@ -56,6 +54,7 @@ public class TableroGrafico extends JPanel {
 		
 		tableroPpal = new TableroPrincipalGrafico(tablero.subtableroPpal);
 		tableroSec = new TableroSecundarioGrafico(tablero.subtableroSec);
+		movimientos = 0;
 	}
 
 	public void moverCarta(CartaRegiment carta) {
@@ -69,14 +68,14 @@ public class TableroGrafico extends JPanel {
 		
 		try {
 			pila.moverCarta(carta);
+			actualizarContadorDeMovimientos();
 		} catch (CartaException e) {
 			carta.setLocation(carta.getPosicionAnterior());
-			this.setMensaje(e.getMessage());
 //			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void moverCartaAPilaSecundaria(CartaRegiment carta) {
 		
 		int fila = tableroSec.getFilaDelPalo(carta.getCarta().getPaloDeCarta());
@@ -88,14 +87,19 @@ public class TableroGrafico extends JPanel {
 		boolean K = puedeRecibirCarta(carta, pilaDestinoK);
 		
 		try {
-			if (As && K)
+			if (As && K) 
 				throw new CartaException("La carta puede ir en dos lugares");
 			else if (As)
+			{
 				pilaDestinoAs.moverCarta(carta);
+				actualizarContadorDeMovimientos();
+			}
 			else if (K)
+			{
 				pilaDestinoK.moverCarta(carta);
+				actualizarContadorDeMovimientos();
+			}
 		} catch (CartaException e) {
-			this.setMensaje(e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -137,6 +141,10 @@ public class TableroGrafico extends JPanel {
 	public int getAnchoTableroSecundario() {
 		return ANCHO_TABLERO_SEC;
 	}
+
+	public int getAltoTableroSecundario() {
+		return ALTO_TABLERO_SEC;
+	}
 	
 	int getAncho() {
 		return ANCHO_TABLERO; 
@@ -149,21 +157,12 @@ public class TableroGrafico extends JPanel {
 	private void inicializarGrafica() 
 	{
 		setLayout(null);
-		inicializarMensaje();
 		fondo = UtilVista.crearImagenIcono("../../fondo00.png").getImage();
 	}
 
-	private void inicializarMensaje() {
-
-		int x = getMedioHorizontal(ANCHO_MENSAJE);
-		int y = ALTO_TABLERO - ALTO_MENSAJE - MARGEN_CASILLA;
-		mensaje = new JLabel("");
-		mensaje.setHorizontalAlignment( SwingConstants.CENTER );
-		mensaje.setOpaque(true);
-		mensaje.setBackground(Tema.MARRON4_100);
-		mensaje.setBounds(x, y, ANCHO_MENSAJE, ALTO_MENSAJE);
-		
-		add(mensaje);
+	public void setPanelPuntaje(PanelDePuntaje panel) {
+		panelDePuntaje = panel;
+		add(panelDePuntaje);
 	}
 	
 	private void setTamanoCasilla() {
@@ -315,10 +314,6 @@ public class TableroGrafico extends JPanel {
 			}	
 		}
 	}
-
-	private void setMensaje(String mensaje) {
-		this.mensaje.setText(mensaje);
-	}
 	
 	public int getMedioHorizontal(int ancho) {
 		return ( ANCHO_TABLERO - ancho ) / 2;
@@ -328,12 +323,28 @@ public class TableroGrafico extends JPanel {
 	public void empezarJuegoNuevo(TableroRegiment tablero) {
 		borrarPilas();
 		inicializarTablero(tablero);
-		
+		reiniciarContadorDeMovimientos();
 	}
 
 	private void borrarPilas() {
 		removeAll();
 		revalidate();
 		repaint();
+	}
+	
+	private void actualizarContadorDeMovimientos() {
+		movimientos++;
+		this.panelDePuntaje.actualizarContador(movimientos);
+		
+	}
+
+	private void reiniciarContadorDeMovimientos() {
+		movimientos = 0;
+		
+		if (this.panelDePuntaje != null ) {
+			panelDePuntaje.actualizarContador(movimientos);
+			add(panelDePuntaje);
+		}
+		
 	}
 }
