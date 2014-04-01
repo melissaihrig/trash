@@ -5,8 +5,10 @@ import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import modelo.Carta;
 import modelo.CartaException;
 import modelo.PaloDeCarta;
 import modelo.PaloDeCartaInglesa;
@@ -14,6 +16,8 @@ import modelo.PaloDeCartaInglesa;
 import regiment.modelo.TableroRegiment;
 import regiment.modelo.TableroRegiment.SubtableroPrincipal;
 import regiment.modelo.TableroRegiment.SubtableroSecundario;
+import regiment.vista.paneles.Dialogos;
+import regiment.vista.paneles.PanelDePuntaje;
 import vista.UtilVista;
 
 @SuppressWarnings("serial")
@@ -35,6 +39,8 @@ public class TableroGrafico extends JPanel {
 	private int ALTO_TABLERO;
 	private int ANCHO_TABLERO;
 	
+	private TableroRegiment tablero;
+	
 	private TableroPrincipalGrafico tableroPpal;
 	private TableroSecundarioGrafico tableroSec;
 	
@@ -52,6 +58,7 @@ public class TableroGrafico extends JPanel {
 	
 	private void inicializarTablero(TableroRegiment tablero) {
 		
+		this.tablero = tablero;
 		tableroPpal = new TableroPrincipalGrafico(tablero.subtableroPpal);
 		tableroSec = new TableroSecundarioGrafico(tablero.subtableroSec);
 		movimientos = 0;
@@ -69,11 +76,17 @@ public class TableroGrafico extends JPanel {
 		try {
 			pila.moverCarta(carta);
 			actualizarContadorDeMovimientos();
+			
+			if (this.tablero.ganoElJuego())
+				Dialogos.dialogoGanaste(getParent());
+			else if ( this.tablero.perdioElJuego() )
+				Dialogos.dialogoPerdiste(getParent());
+				
 		} catch (CartaException e) {
 			carta.setLocation(carta.getPosicionAnterior());
 //			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
+//			System.out.println(e.getMessage());
+		} 
 	}
 
 	public void moverCartaAPilaSecundaria(CartaRegiment carta) {
@@ -87,8 +100,9 @@ public class TableroGrafico extends JPanel {
 		boolean K = puedeRecibirCarta(carta, pilaDestinoK);
 		
 		try {
-			if (As && K) 
-				throw new CartaException("La carta puede ir en dos lugares");
+			if (As && K) {
+				JOptionPane.showMessageDialog(this.getParent(), "Puede ir en cualquiera de los dos mazos.");				
+			}
 			else if (As)
 			{
 				pilaDestinoAs.moverCarta(carta);
@@ -99,6 +113,12 @@ public class TableroGrafico extends JPanel {
 				pilaDestinoK.moverCarta(carta);
 				actualizarContadorDeMovimientos();
 			}
+			
+			if (this.tablero.ganoElJuego())
+				Dialogos.dialogoGanaste(getParent());
+			else if ( this.tablero.perdioElJuego() )
+				Dialogos.dialogoPerdiste(getParent());
+			
 		} catch (CartaException e) {
 			e.printStackTrace();
 		}
@@ -146,11 +166,11 @@ public class TableroGrafico extends JPanel {
 		return ALTO_TABLERO_SEC;
 	}
 	
-	int getAncho() {
+	public int getAncho() {
 		return ANCHO_TABLERO; 
 	}
 
-	int getAlto() {
+	public int getAlto() {
 		return ALTO_TABLERO; 
 	}
 
@@ -347,4 +367,5 @@ public class TableroGrafico extends JPanel {
 		}
 		
 	}
+
 }

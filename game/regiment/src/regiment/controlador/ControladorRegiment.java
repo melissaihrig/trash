@@ -4,7 +4,7 @@ import modelo.Baraja;
 import modelo.BarajaInglesa;
 import regiment.modelo.DistribuidorRegiment;
 import regiment.modelo.TableroRegiment;
-import regiment.vista.Mesa;
+import regiment.vista.paneles.Mesa;
 
 public class ControladorRegiment {
 

@@ -2,7 +2,7 @@ package test;
 
 import regiment.modelo.TableroDePrueba;
 import regiment.modelo.TableroRegiment;
-import regiment.vista.Mesa;
+import regiment.vista.paneles.Mesa;
 
 public class VistaRegiment {
 	

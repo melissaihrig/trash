@@ -30,4 +30,5 @@ public class CartaRegiment extends CartaInglesaGrafica {
 	void setOrden(int orden) {
 		this.orden = orden;
 	}
+	
 }

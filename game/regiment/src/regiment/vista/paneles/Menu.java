@@ -1,39 +1,55 @@
-package regiment.vista;
+package regiment.vista.paneles;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import regiment.controlador.ControladorRegiment;
+import regiment.vista.Tema;
+
 import java.awt.GridLayout;
 
 @SuppressWarnings("serial")
-public class PanelDePuntaje extends JPanel {
+public class Menu extends JPanel {
 	
 	public final static int TAMANO_LETRA = 14;
-	public final static int ANCHO = 150;
+	public final static int ANCHO = 100;
 	public final static int ALTO = 50;
 	
-	private JLabel contador;
 	
-	public PanelDePuntaje() {
+	public Menu() {
 		super();
 		
-		JLabel titulo = new JLabel("Movimientos");
-		setLayout(new GridLayout(2, 1, 0, 3));
+		final JLabel juegoNuevo = new JLabel("Nuevo");
+		juegoNuevo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) { 
+				ControladorRegiment.getInstancia().juegoNuevo();
+			}
+		});
+		setLayout(new GridLayout(2, 1, 0, 4));
 		
-		darFormatoA(titulo);
-		add(titulo);
+		darFormatoA(juegoNuevo);
+		add(juegoNuevo);
 		
-		contador = new JLabel("0");
-		darFormatoA(contador);
-		add(contador);
+		JLabel salir = new JLabel("Salir");
+		salir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				System.exit(0);
+			}
+		});
+		darFormatoA(salir);
+		add(salir);
 		
 		darFormatoAlPanel();
 	}
@@ -59,9 +75,5 @@ public class PanelDePuntaje extends JPanel {
 	private void darFormatoA(JLabel etiqueta) {
 		etiqueta.setFont(new Font (etiqueta.getName(), Font.BOLD, TAMANO_LETRA));
 		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
-	}
-	
-	public void actualizarContador(int puntaje) {
-		contador.setText(Integer.toString(puntaje));
 	}
 }

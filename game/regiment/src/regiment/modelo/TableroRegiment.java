@@ -20,6 +20,74 @@ public class TableroRegiment implements Tablero {
 		Pila getPila( int fila, int columna);
 	}
 	
+	public boolean ganoElJuego() {
+		return subtableroPpal.getCantidadDeCartas() == 0;
+	}
+
+	public boolean perdioElJuego() {
+		return !(algunMovimientoEnFila(0) || algunMovimientoEnFila(2));
+	}
+	
+	private boolean algunMovimientoEnFila(int fila) {
+		
+		for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++) {
+			
+			Pila pilaOrigen = subtableroPpal.getPila(fila, columna);
+
+			if ( pilaOrigen.estaVacia() || puedeIrEnElTableroPrincipal(pilaOrigen) || puedeIrEnElTableroSecundario(pilaOrigen) ) {
+				System.out.println("pila: " + pilaOrigen.getFila() + " " + pilaOrigen.getColumna());
+				System.out.println(pilaOrigen.estaVacia());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean puedeIrEnElTableroPrincipal(Pila pilaOrigen) {
+		
+		for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++) {
+			
+			Pila pilaDestinoArriba= subtableroPpal.getPila(0, columna);
+			Pila pilaDestinoAbajo= subtableroPpal.getPila(2, columna);
+
+			try {
+				if ( pilaOrigen != pilaDestinoArriba && pilaOrigen.sePuedeMoverCarta(pilaDestinoArriba)) 
+				{
+					System.out.println("destino: " + pilaDestinoArriba.getFila() + " " + pilaDestinoArriba.getColumna());
+					return true;
+				}
+				else if (pilaOrigen != pilaDestinoAbajo && pilaOrigen.sePuedeMoverCarta(pilaDestinoAbajo))
+					{
+					System.out.println("destino: " + pilaDestinoAbajo.getFila() + " " + pilaDestinoAbajo.getColumna());
+					return true;
+					}
+		
+			} catch (CartaException e) {}
+		}
+		
+		return false;
+	}
+	
+	private boolean puedeIrEnElTableroSecundario(Pila pilaOrigen) {
+		
+		for (int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++)
+		{
+			for (int columna = 0; columna < SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++) {
+				
+				Pila pilaDestino = subtableroSec.getPila(fila, columna);
+			
+				try {
+					if (pilaOrigen.sePuedeMoverCarta(pilaDestino)) {
+						System.out.println("destino: " + pilaDestino.getFila() + " " + pilaDestino.getColumna());
+						return true;
+					}
+				} catch (CartaException e) {}
+				
+			}
+		}
+		return false;
+	}
+	
 	public class SubtableroPrincipal implements Subtablero {
 
 		public static final int CANTIDAD_DE_FILAS = 3;
@@ -53,6 +121,16 @@ public class TableroRegiment implements Tablero {
 			return this.tablero[fila][columna];
 		}
 		
+		public int getCantidadDeCartas() {
+			
+			int cantidadDeCartas = 0;
+			
+			for (int fila = 0; fila < SubtableroPrincipal.CANTIDAD_DE_FILAS; fila++)
+				for (int columna = 0; columna < SubtableroPrincipal.CANTIDAD_DE_COLUMNAS; columna++)
+					cantidadDeCartas += tablero[fila][columna].getCantidadDeCartas(); 
+			
+			return cantidadDeCartas;
+		}
 	}
 	
 	public class SubtableroSecundario implements Subtablero {

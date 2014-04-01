@@ -22,6 +22,7 @@ public class PilaDeAses extends Pila {
 		
 		if ( this.estaVacia() ) 
 		{
+			System.out.println( "origen: " + origen.getFila() + " " + origen.getColumna());
 			if ( origen.getUltimaCarta().getValor() != As )
 				throw new CartaException("Se esperaba un As");
 		

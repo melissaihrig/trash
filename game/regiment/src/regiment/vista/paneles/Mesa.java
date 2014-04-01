@@ -1,4 +1,4 @@
-package regiment.vista;
+package regiment.vista.paneles;
 
 import java.awt.BorderLayout;
 
@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import regiment.modelo.TableroRegiment;
+import regiment.vista.TableroGrafico;
 
 @SuppressWarnings("serial")
 public class Mesa extends JFrame {
