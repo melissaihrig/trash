@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import modelo.Carta;
 import modelo.CartaException;
 import modelo.PaloDeCarta;
 import modelo.PaloDeCartaInglesa;
