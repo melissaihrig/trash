@@ -2,6 +2,7 @@ package regiment.modelo;
 
 import modelo.Carta;
 import modelo.CartaException;
+import modelo.PaloDeCartaInglesa;
 import modelo.Tablero;
 
 public class TableroRegiment implements Tablero {
@@ -80,19 +81,6 @@ public class TableroRegiment implements Tablero {
 		return false;
 	}
 	
-	private boolean sePuedeMoverDesde(Pila pilaOrigen, Pila pilaDestino) {
-		
-		System.out.println("pila DEST: " + pilaDestino.getFila() + " " + pilaDestino.getColumna()+ " -> " + pilaDestino.getUltimaCarta());
-		boolean mover = false;
-		try {
-			if (pilaOrigen != pilaDestino && pilaOrigen.sePuedeMoverCarta(pilaDestino))
-				mover = true;
-		} 
-		catch (CartaException e) {}
-		
-		return mover;
-	}
-	
 	private boolean puedeIrEnElTableroSecundario(Pila pilaOrigen) {
 		
 		for (int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++)
@@ -101,16 +89,24 @@ public class TableroRegiment implements Tablero {
 				
 				Pila pilaDestino = subtableroSec.getPila(fila, columna);
 			
-				try {
-					if (pilaOrigen.sePuedeMoverCarta(pilaDestino)) {
-						System.out.println("destino TAB SECUNDARIO: " + pilaDestino.getFila() + " " + pilaDestino.getColumna());
-						return true;
-					}
-				} catch (CartaException e) {}
-				
+				if ( sePuedeMoverDesde(pilaOrigen, pilaDestino) )
+					return true;
 			}
 		}
 		return false;
+	}
+
+	private boolean sePuedeMoverDesde(Pila pilaOrigen, Pila pilaDestino) {
+		
+		System.out.println("pila DEST: " + pilaDestino.getFila() + " " + pilaDestino.getColumna()+ " -> " + pilaDestino.getUltimaCarta());
+		boolean mover = false;
+		try {
+			if (pilaOrigen.sePuedeMoverCarta(pilaDestino))
+				mover = true;
+		} 
+		catch (CartaException e) {}
+		
+		return mover;
 	}
 	
 	public class SubtableroPrincipal implements Subtablero {
@@ -171,11 +167,11 @@ public class TableroRegiment implements Tablero {
 
 			/* columna de Ases */
 			for ( int fila = 0; fila < CANTIDAD_DE_FILAS; fila++ )
-				tablero[fila][0] = new PilaDeAses(fila, 0);
+				tablero[fila][0] = new PilaDeAses(fila, 0, PaloDeCartaInglesa.values()[fila]);
 			
 			/* columna de Kes */
 			for ( int fila = 0; fila < CANTIDAD_DE_FILAS; fila++ )
-				tablero[fila][1] = new PilaDeKes(fila, 1);		
+				tablero[fila][1] = new PilaDeKes(fila, 1, PaloDeCartaInglesa.values()[fila]);		
 		}
 
 		public void setCarta( int fila, int columna, Carta carta) throws CartaException {

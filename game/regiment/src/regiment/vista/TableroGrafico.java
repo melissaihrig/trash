@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import modelo.CartaException;
 import modelo.PaloDeCarta;
-import modelo.PaloDeCartaInglesa;
 
 import regiment.modelo.TableroRegiment;
 import regiment.modelo.TableroRegiment.SubtableroPrincipal;
@@ -313,7 +312,7 @@ public class TableroGrafico extends JPanel {
 		private void inicializarContenedor(SubtableroSecundario subtableroSec) {
 			for (int columna = 0; columna < SubtableroSecundario.CANTIDAD_DE_COLUMNAS; columna++)
 				for (int fila = 0; fila < SubtableroSecundario.CANTIDAD_DE_FILAS; fila++)
-					contenedorSec[fila][columna] = new PilaJuntaAcumulacion(subtableroSec.getPila(fila, columna),PaloDeCartaInglesa.values()[fila]);
+					contenedorSec[fila][columna] = new PilaJuntaAcumulacion(subtableroSec.getPila(fila, columna));
 		}
 
 		private void inicializarTableroSec()

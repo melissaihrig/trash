@@ -2,6 +2,7 @@ package regiment.modelo;
 
 import modelo.Carta;
 import modelo.CartaException;
+import modelo.PaloDeCartaInglesa;
 
 /* Se puede colocar una carta en esta pila si:  
  *   - no hay carta en el espacio que se quiere agregar la carta y la que se va a agregar es un As
@@ -11,26 +12,29 @@ import modelo.CartaException;
  * No deja sacar una carta en ningún caso
  */
 
-public class PilaDeAses extends Pila {
-
-	public PilaDeAses(int fila, int columna) {
-		super(fila, columna);
+public class PilaDeAses extends PilaDeAcumulacionConPalo {
+	
+	public PilaDeAses(int fila, int columna, PaloDeCartaInglesa palo) {
+		super(fila, columna, palo);
 	}
 
 	@Override
 	public void verificarRecibirCarta(Pila origen) throws CartaException {
 		
+		Carta cartaAAgregar = origen.getUltimaCarta();
+		
+		if (!esDelMismoPalo(cartaAAgregar))
+			throw new CartaException("Se esperaba una carta de " + this.getPalo());
+		
 		if ( this.estaVacia() ) 
 		{
-			System.out.println( "origen: " + origen.getFila() + " " + origen.getColumna());
-			if ( origen.getUltimaCarta().getValor() != As )
-				throw new CartaException("Se esperaba un As");
+			if ( cartaAAgregar.getValor() != As )
+				throw new CartaException("Se esperaba un As de " + cartaAAgregar.getPaloDeCarta());
 		
 			return;
 		}
 		
 		Carta cartaDeArriba = this.getUltimaCarta();
-		Carta cartaAAgregar = origen.getUltimaCarta();
 		
 		verificarSiMismoPalo( cartaDeArriba, cartaAAgregar );
 		
@@ -42,9 +46,4 @@ public class PilaDeAses extends Pila {
 	public void verificarSacarUltimaCarta(Pila pilaDestino) throws CartaException {
 		throw new CartaException("No se puede sacar la carta de esta pila");
 	}
-
-	protected boolean esPilaAcumulacion() {
-		return true;
-	}
-
 }
