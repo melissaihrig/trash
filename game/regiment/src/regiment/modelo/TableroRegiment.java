@@ -26,15 +26,8 @@ public class TableroRegiment implements Tablero {
 	}
 
 	public boolean perdioElJuego() {
-		System.out.println("=============================*****===================");
-
-		boolean a = algunMovimientoEnFila(0) || algunMovimientoEnFila(2);
-		
-		
-		System.out.println("mov disponible: " +  a + " ");
-		System.out.println("================================================");
-
-		return !a;
+		boolean hayMovimientos = algunMovimientoEnFila(0) || algunMovimientoEnFila(2);
+		return !hayMovimientos;
 	}
 	
 	private boolean algunMovimientoEnFila(int fila) {
@@ -44,17 +37,17 @@ public class TableroRegiment implements Tablero {
 			Pila pilaOrigen = subtableroPpal.getPila(fila, columna);
 			Pila pilaMedio = subtableroPpal.getPila(1, columna);
 
-			System.out.println("..PILA ORIGEN: " + pilaOrigen.getFila() + " " + pilaOrigen.getColumna() + " -> " + pilaOrigen.getUltimaCarta());
-			
-			if ( pilaOrigen.estaVacia() && !pilaMedio.estaVacia()) {
-				System.out.println("Pila origen vacía");
-				return true;
+			if ( pilaOrigen.estaVacia() ) {
+				
+				if (!pilaMedio.estaVacia() ) 
+					return true;
+				else 
+					return false;
 			} 
 			
-			if ( puedeIrEnElTableroPrincipal(pilaOrigen) || puedeIrEnElTableroSecundario(pilaOrigen) ) {
-				System.out.println("pila origen de mov valido: " + pilaOrigen.getFila() + " " + pilaOrigen.getColumna() + " -> " + pilaOrigen.getUltimaCarta());
+			if ( puedeIrEnElTableroPrincipal(pilaOrigen) || puedeIrEnElTableroSecundario(pilaOrigen) ) 
 				return true;
-			}
+
 		}
 		return false;
 	}
@@ -66,14 +59,10 @@ public class TableroRegiment implements Tablero {
 			Pila pilaDestinoArriba = subtableroPpal.getPila(0, columna);
 			Pila pilaDestinoAbajo = subtableroPpal.getPila(2, columna);
 				
-			if ( sePuedeMoverDesde(pilaOrigen, pilaDestinoArriba) )
-			{
-				System.out.println("destino: " + pilaDestinoArriba.getFila() + " " + pilaDestinoArriba.getColumna() + " -> " + pilaDestinoArriba.getUltimaCarta());
+			if ( sePuedeMoverDesde(pilaOrigen, pilaDestinoArriba) ) {
 				return true;
 			}
-			else if ( sePuedeMoverDesde(pilaOrigen, pilaDestinoAbajo) )
-			{
-				System.out.println("destino: " + pilaDestinoAbajo.getFila() + " " + pilaDestinoAbajo.getColumna() + " -> " + pilaDestinoAbajo.getUltimaCarta());
+			else if ( sePuedeMoverDesde(pilaOrigen, pilaDestinoAbajo) ) {
 				return true;
 			}
 		}
@@ -97,8 +86,6 @@ public class TableroRegiment implements Tablero {
 	}
 
 	private boolean sePuedeMoverDesde(Pila pilaOrigen, Pila pilaDestino) {
-		
-		System.out.println("pila DEST: " + pilaDestino.getFila() + " " + pilaDestino.getColumna()+ " -> " + pilaDestino.getUltimaCarta());
 		boolean mover = false;
 		try {
 			if (pilaOrigen.sePuedeMoverCarta(pilaDestino))
